@@ -1,6 +1,26 @@
 <template>
     <a-layout>
-        <a-layout-header class="layout-ua-header">Header</a-layout-header>
+        <a-layout-header class="layout-ua-header">
+            <a-form layout="inline" :form="form" @submit="handleSubmit">
+                <a-form-item>
+                    <a-input placeholder="请输入姓名">
+                        <a-icon slot="prefix" type="user" style="color:rgba(0,0,0,.25)" />
+                    </a-input>
+                </a-form-item>
+                <a-form-item>
+                    <a-input
+                            placeholder="请输入部门名称"
+                        >
+                        <a-icon slot="prefix" type="lock" style="color:rgba(0,0,0,.25)" />
+                    </a-input>
+                </a-form-item>
+                <a-form-item>
+                    <a-button type="primary" html-type="submit" >
+                        搜索
+                    </a-button>
+                </a-form-item>
+            </a-form>
+        </a-layout-header>
         <a-layout-content class="layout-ua-content">
             <a-table bordered :data-source="dataSource" :columns="columns">
                 <template slot="name" slot-scope="text, record">
@@ -22,6 +42,9 @@
 </template>
 
 <script>
+    function hasErrors(fieldsError) {
+        return Object.keys(fieldsError).some(field => fieldsError[field]);
+    }
     const EditableCell = {
         template: `
             <div class="editable-cell">
@@ -58,7 +81,7 @@
             },
             edit() {
                 this.editable = true;
-            },
+            }
         }
     };
     export default {
@@ -67,6 +90,8 @@
         },
         data() {
             return {
+                 hasErrors,
+                form: this.$form.createForm(this, { name: 'horizontal_login' }),
                     dataSource: [
                         {
                             key: '0',
@@ -105,6 +130,12 @@
                     ]
             }
   },
+mounted() {
+    this.$nextTick(() => {
+        // To disabled submit button at the beginning.
+        this.form.validateFields();
+    });
+},
   methods: {
             onCellChange(key, dataIndex, value) {
                 const dataSource = [...this.dataSource];
@@ -129,7 +160,23 @@
                 this.dataSource = [...dataSource, newData];
                 this.count = count + 1;
             },
-        },
+            userNameError() {
+                const { getFieldError, isFieldTouched } = this.form;
+                return isFieldTouched('userName') && getFieldError('userName');
+            },
+            passwordError() {
+                const { getFieldError, isFieldTouched } = this.form;
+                return isFieldTouched('password') && getFieldError('password');
+            },
+            handleSubmit(e) {
+                e.preventDefault();
+                this.form.validateFields((err, values) => {
+                    if (!err) {
+                        console.log('Received values of form: ', values);
+                    }
+                });
+            }
+        }
     }
 </script>
 
@@ -137,7 +184,7 @@
     .layout-ua-header{
         width:100% !important;
         height:3rem !important;
-
+        background: #fbfbfc !important;
     }
 
     .layout-ua-content{

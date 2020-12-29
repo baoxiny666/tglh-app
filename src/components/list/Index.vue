@@ -1,8 +1,8 @@
 <template>
   <a-layout id="components-layout-demo-custom-trigger">
     <a-layout-sider class="layoutLeft" v-model="collapsed" :trigger="null" collapsible>
-      <div class="logo">
-        <div class="login_title">
+      <div class="logo" :style="getStyle()">
+        <div class="login_title" v-if="logintitle">
           联合特钢
         </div>
       </div>
@@ -22,7 +22,12 @@
             <a-icon
               class="trigger"
               :type="collapsed ? 'menu-unfold' : 'menu-fold'"
-              @click="() => (collapsed = !collapsed)"
+              @click="() =>{
+                  collapsed = !collapsed
+                  logintitle = !logintitle
+                  
+                  
+              }"
             />
             <a-breadcrumb class="layout_shrink_bread">
               <a-breadcrumb-item>Home</a-breadcrumb-item>
@@ -68,11 +73,18 @@
     data() {
       return {
         collapsed: false,
-        menu_isshow: false
+        menu_isshow: false,
+        logintitle:true
       }
     },
     methods:{
-      
+      getStyle(){
+        if(this.logintitle == false){
+          return "background-position: 48% 50%;"
+        }else{
+          return "background-position: 20% 50%;"
+        }
+      }
     }
   };
 </script>
@@ -91,10 +103,10 @@
 
   #components-layout-demo-custom-trigger .logo {
     height: 3rem;
-    /* background:url('../../assets/favicon.png') no-repeat; */
-    /* background-size: 1rem 1rem; */
-    /* background-position: 10% 50%; */
-    background-color:rgba(230, 230, 250, 0.842);
+    background:url('../../assets/favicon.png') no-repeat;
+    background-size: 1rem 1rem;
+    background-position: 20% 50%;
+    background-color:rgba(0, 0, 0, 0.65);;
   }
 
   .layoutHeader{

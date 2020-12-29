@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-menu mode="inline" :open-keys="openKeys"  @openChange="onOpenChange">
+    <a-menu mode="inline" :theme="theme" :open-keys="openKeys"  @openChange="onOpenChange">
       <a-sub-menu key="sub1">
         <span slot="title"><a-icon type="mail" />
           <span>系统管理</span>
@@ -47,6 +47,7 @@ export default {
     return {
       rootSubmenuKeys: ['sub1', 'sub2', 'sub4'],
       openKeys: ['sub1'],
+      theme:'dark'
     }
   },
   methods: {
