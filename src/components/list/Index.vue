@@ -36,13 +36,13 @@
           <div class="menu">
             <a-dropdown>
               <a class="ant-dropdown-link"  style="width:7rem !important" @click="e => e.preventDefault()">
-                <a-icon type="user" />&nbsp;炼铁厂-数字信息化部-张莫某<a-icon type="down" />
+                <a-icon type="user" style="color: rgba(24,144,120,.95)"/>&nbsp;炼铁厂-数字信息化部-张莫某<a-icon type="down" />
               </a>
               <a-menu slot="overlay">
                 <a-menu-item>
                   <a href="javascript:;">个人中心</a>
                 </a-menu-item>
-                <a-menu-item>/
+                <a-menu-item>
                   <a href="javascript:;">退出登录</a>
                 </a-menu-item>
               </a-menu>
