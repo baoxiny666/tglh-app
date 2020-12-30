@@ -1,7 +1,7 @@
 <template>
     <a-layout>
         <a-layout-header class="layout-ua-header">
-            <a-form layout="inline" :form="form" @submit="handleSubmit">
+            <a-form layout="inline" class="layout-form" :form="form" @submit="handleSubmit">
                 <a-form-item>
                     <a-input placeholder="请输入姓名">
                         <a-icon slot="prefix" type="user" style="color:rgba(0,0,0,.25)" />
@@ -11,176 +11,120 @@
                     <a-input
                             placeholder="请输入部门名称"
                         >
-                        <a-icon slot="prefix" type="lock" style="color:rgba(0,0,0,.25)" />
+                        <a-icon  slot="prefix" type="deployment-unit" style="color:rgba(0,0,0,.25)"/>
                     </a-input>
                 </a-form-item>
                 <a-form-item>
-                    <a-button type="primary" html-type="submit" >
+                    <a-button type="primary" icon="search">
                         搜索
+                    </a-button>  
+                </a-form-item>
+                <a-form-item>
+                    <a-button type="danger" @click="showModal">
+                        增加
                     </a-button>
                 </a-form-item>
             </a-form>
+           
         </a-layout-header>
         <a-layout-content class="layout-ua-content">
-            <a-table bordered :data-source="dataSource" :columns="columns">
-                <template slot="name" slot-scope="text, record">
-                    <editable-cell :text="text" @change="onCellChange(record.key, 'name', $event)" />
-                </template>
-                <template slot="operation" slot-scope="text, record">
-                    <a-popconfirm
-                        v-if="dataSource.length"
-                        title="Sure to delete?"
-                        @confirm="() => onDelete(record.key)"
-                    >
-                    <a href="javascript:;">Delete</a>
-                    </a-popconfirm>
-                </template>
-            </a-table>
+            <user-list></user-list>
         </a-layout-content>
-        <a-layout-footer class="layout-ua-footer">Footer</a-layout-footer>
+        <a-layout-footer class="layout-ua-footer">
+           
+        </a-layout-footer>
+
+
+        <user-add
+                ref="formadd"
+                :visible="visible"
+                @cancel="dialogStatus==='add'?handleCancel():handleEditCancel()"
+                @ok="dialogStatus==='add'?handleOk():handleEditOk()"
+        />
     </a-layout>
+    
 </template>
 
-<script>
-    function hasErrors(fieldsError) {
-        return Object.keys(fieldsError).some(field => fieldsError[field]);
-    }
-    const EditableCell = {
-        template: `
-            <div class="editable-cell">
-                <div v-if="editable" class="editable-cell-input-wrapper">
-                <a-input :value="value" @change="handleChange" @pressEnter="check" /><a-icon
-                    type="check"
-                    class="editable-cell-icon-check"
-                    @click="check"
-                />
-                </div>
-                <div v-else class="editable-cell-text-wrapper">
-                {{ value || ' ' }}
-                <a-icon type="edit" class="editable-cell-icon" @click="edit" />
-                </div>
-            </div>
-            `,
-        props: {
-            text: String,
-        },
-        data() {
-            return {
-                value: this.text,
-                editable: false
-            };
-        },
-        methods: {
-            handleChange(e) {
-                const value = e.target.value;
-                this.value = value;
-            },
-            check() {
-                this.editable = false;
-                this.$emit('change', this.value);
-            },
-            edit() {
-                this.editable = true;
-            }
-        }
-    };
+<script> 
+    import UserList from './UserList.vue';
+    import UserAdd from './UserAdd.vue';
     export default {
         components: {
-            EditableCell,
+            UserList,
+            UserAdd
         },
         data() {
             return {
-                 hasErrors,
-                form: this.$form.createForm(this, { name: 'horizontal_login' }),
-                    dataSource: [
-                        {
-                            key: '0',
-                            name: 'Edward King 0',
-                            age: '32',
-                            address: 'London, Park Lane no. 0',
-                        },
-                        {
-                            key: '1',
-                            name: 'Edward King 1',
-                            age: '32',
-                            address: 'London, Park Lane no. 1',
-                        },
-                    ],
-                    count: 2,
-                    columns: [
-                        {
-                            title: 'name',
-                            dataIndex: 'name',
-                            width: '30%',
-                            scopedSlots: { customRender: 'name' },
-                        },
-                        {
-                            title: 'age',
-                            dataIndex: 'age',
-                        },
-                        {
-                            title: 'address',
-                            dataIndex: 'address',
-                        },
-                        {
-                            title: 'operation',
-                            dataIndex: 'operation',
-                            scopedSlots: { customRender: 'operation' },
-                        },
-                    ]
+                dialogStatus:'',
+                visible: false
             }
-  },
-mounted() {
-    this.$nextTick(() => {
-        // To disabled submit button at the beginning.
-        this.form.validateFields();
-    });
-},
-  methods: {
-            onCellChange(key, dataIndex, value) {
-                const dataSource = [...this.dataSource];
-                const target = dataSource.find(item => item.key === key);
-                if (target) {
-                    target[dataIndex] = value;
-                    this.dataSource = dataSource;
-                }
-            },
-            onDelete(key) {
-                const dataSource = [...this.dataSource];
-                this.dataSource = dataSource.filter(item => item.key !== key);
-            },
-            handleAdd() {
-                const { count, dataSource } = this;
-                const newData = {
-                    key: count,
-                    name: `Edward King ${count}`,
-                    age: 32,
-                    address: `London, Park Lane no. ${count}`,
-                };
-                this.dataSource = [...dataSource, newData];
-                this.count = count + 1;
-            },
-            userNameError() {
-                const { getFieldError, isFieldTouched } = this.form;
-                return isFieldTouched('userName') && getFieldError('userName');
-            },
-            passwordError() {
-                const { getFieldError, isFieldTouched } = this.form;
-                return isFieldTouched('password') && getFieldError('password');
-            },
-            handleSubmit(e) {
-                e.preventDefault();
-                this.form.validateFields((err, values) => {
-                    if (!err) {
-                        console.log('Received values of form: ', values);
+        },
+        methods: {
+                onCellChange(key, dataIndex, value) {
+                    const dataSource = [...this.dataSource];
+                    const target = dataSource.find(item => item.key === key);
+                    if (target) {
+                        target[dataIndex] = value;
+                        this.dataSource = dataSource;
                     }
-                });
+                },
+                onDelete(key) {
+                    const dataSource = [...this.dataSource];
+                    this.dataSource = dataSource.filter(item => item.key !== key);
+                },
+                handleAdd() {
+                    const { count, dataSource } = this;
+                    const newData = {
+                        key: count,
+                        name: `Edward King ${count}`,
+                        age: 32,
+                        address: `London, Park Lane no. ${count}`,
+                    };
+                    this.dataSource = [...dataSource, newData];
+                    this.count = count + 1;
+                },
+                handleSubmit(e) {
+                    e.preventDefault();
+                    this.form.validateFields((err, values) => {
+                        if (!err) {
+                            console.log('Received values of form: ', values);
+                        }
+                    })
+                },
+                showModal() {
+                    this.visible = true;
+                    this.dialogStatus = 'add';
+                },
+                handleCancel() {
+                    this.visible = false;
+                    this.dialogStatus=''
+                    console.log('add cancel')
+                },
+                handleOk(){
+                    console.log('add ok')
+                },
+                //处理编辑的方法
+                showEditModal(){
+                    this.type = 'edit';
+                    this.visible = true;
+                },
+                handleEditCancel(){
+                    this.visible = false;
+                    this.dialogStatus = ''
+                    console.log('edit cancel')
+                },
+                handleEditOk(){
+                    this.visible = true;
+                    console.log('edit ok')
+                }
             }
-        }
     }
 </script>
 
 <style> 
+    .layout-form{
+        margin-top: 0.2rem !important;
+    }
     .layout-ua-header{
         width:100% !important;
         height:3rem !important;
@@ -196,49 +140,4 @@ mounted() {
         width:100% !important;
         height:2rem !important;
     }
-
-
-    .editable-cell {
-        position: relative;
-    }
-
-    .editable-cell-input-wrapper,
-    .editable-cell-text-wrapper {
-        padding-right: 24px;
-    }
-
-    .editable-cell-text-wrapper {
-        padding: 5px 24px 5px 5px;
-    }
-
-    .editable-cell-icon,
-    .editable-cell-icon-check {
-        position: absolute;
-        right: 0;
-        width: 20px;
-        cursor: pointer;
-    }
-
-    .editable-cell-icon {
-        line-height: 18px;
-        display: none;
-    }
-
-    .editable-cell-icon-check {
-        line-height: 28px;
-    }
-
-    .editable-cell:hover .editable-cell-icon {
-        display: inline-block;
-    }
-
-    .editable-cell-icon:hover,
-    .editable-cell-icon-check:hover {
-        color: #108ee9;
-    }
-
-    .editable-add-btn {
-        margin-bottom: 8px;
-    }
-
 </style>

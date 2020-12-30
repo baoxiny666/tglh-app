@@ -14,15 +14,15 @@
       
       
         <a-menu-item key="2">
-          <router-link to="/userManage">
+          <router-link to="/functionManage">
             角色管理
           </router-link>
         </a-menu-item> 
         
         
         <a-menu-item key="3">
-          <router-link to="/userManage">
-            菜单管理
+          <router-link to="/functionManage">
+            功能管理
           </router-link>
         </a-menu-item>
         
