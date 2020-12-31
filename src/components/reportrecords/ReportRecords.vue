@@ -1,36 +1,67 @@
 <template>
     <a-layout>
         <a-layout-header class="layout-ua-header">
-            <a-form layout="inline" class="layout-form" :form="formadd" @submit="handleSubmit">
-                <a-form-item>
-                    <a-input placeholder="请输入姓名">
-                        <a-icon type="filter" slot="prefix" />
-                        <!-- <a-icon slot="prefix" type="user" style="color:rgba(0,0,0,.25)" /> -->
-                    </a-input>
-                </a-form-item>
-                <a-form-item>
-                    <a-input  placeholder="请输入部门名称">
-                        <a-icon  slot="prefix" type="deployment-unit" style="color:rgba(0,0,0,.25)"/>
-                    </a-input>
-                </a-form-item>
-                <a-form-item>
-                    <a-button type="primary" icon="search">
-                        搜索
-                    </a-button>  
-                </a-form-item>
-                <a-form-item>
-                    <a-button type="danger" @click="showModal">
-                        增加
-                    </a-button>
-                </a-form-item>
+            <a-form layout="inline" class="layout-form" :form="formReportRecords" @submit="handleReportRecordsSubmit">
+                 <a-space :size="size">
+                    <a-form-item>
+                        <a-input placeholder="请输入搜索内容">
+                            <a-icon type="filter" slot="prefix" />
+                            <!-- <a-icon type="user" style="color:rgba(0,0,0,.25)" /> -->
+                        </a-input>
+                    </a-form-item>
+                
+                    <a-form-item label="状态选择">
+                            <a-select  default-value="0" style="width: 120px"
+                                v-decorator="[
+                                    'record_status',
+                                    { 
+                                        rules: [{ required: true, message: '请选择状态' }] 
+                                    }
+                                ]"
+                                placeholder=""
+                                @change="handleRecordsSelectChange"
+                                >
+                                <a-select-option value="0">
+                                    新增
+                                </a-select-option>
+                                <a-select-option value="1">
+                                    已审核
+                                </a-select-option>
+                                <a-select-option value="2">
+                                    未通过
+                                </a-select-option>
+                                <a-select-option value="3">
+                                    已处理
+                                </a-select-option>
+                                <a-select-option value="4">
+                                    已归档
+                                </a-select-option>
+                            </a-select>
+                        </a-form-item>
+                        <a-form-item>
+                            <a-range-picker
+                                :ranges="{ Today: [moment(), moment()], 'This Month': [moment(), moment().endOf('month')] }"
+                                @change="onRecordsChange"
+                            ></a-range-picker>
+                        </a-form-item>
+                        <a-form-item>
+                            <a-button type="primary" icon="search">
+                                搜索
+                            </a-button>  
+                        </a-form-item>
+                   
+                        <a-form-item>
+                            <a-button type="danger" @click="showModal">
+                                增加
+                            </a-button>
+                        </a-form-item>
+                     </a-space>
             </a-form>
-           
         </a-layout-header>
         <a-layout-content class="layout-ua-content">
-            <user-list></user-list>
+            <report-records-list></report-records-list>
         </a-layout-content>
         <a-layout-footer class="layout-ua-footer">
-           
         </a-layout-footer>
 
 
@@ -45,15 +76,14 @@
 </template>
 
 <script> 
-    import UserList from './UserList.vue';
-    import UserAdd from './UserAdd.vue';
+    import ReportRecordsList from './ReportRecordsList'
     export default {
         components: {
-            UserList,
-            UserAdd
+            ReportRecordsList
         },
         data() {
             return {
+                size:67,
                 formadd: this.$form.createForm(this),
                 dialogStatus:'',
                 visible: false
@@ -116,6 +146,9 @@
                 handleEditOk(){
                     this.visible = true;
                     console.log('edit ok')
+                },
+                handleReportRecordsSubmit(){
+                    
                 }
             }
     }

@@ -1,16 +1,17 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import axios from 'axios'
-import Login from '../components/user/Login'
-import Register from '../components/user/Register'
-import Index from '../components/list/Index'
+import Login from '../components/system/Login'
+import Register from '../components/system/Register'
+import Index from '../components/home/Index'
 import UserManage from '../components/usermanage/UserManage'
-import FunctionManage from '../components/functionmanage/FunctionManage'
+import ReportsRecords from '../components/reportrecords/ReportRecords.vue'
 Vue.use(VueRouter)
 
 const routes = [
+
   {
-    path:'/login',
+    path:'/',
     name:'登录',
     component:Login
   },
@@ -30,9 +31,9 @@ const routes = [
         component:UserManage
       },
       {
-        path: '/functionManage',
-        name: '功能管理',
-        component:FunctionManage
+        path: '/reportsRecords',
+        name: '上报记录',
+        component:ReportsRecords
       }
     ]
   }
@@ -60,30 +61,5 @@ router.beforeEach((to, from, next) => {
   }
 });
 
-// 添加请求拦截器，在请求头中加token
-axios.interceptors.request.use(
-  config => {
-    if (localStorage.getItem('Authorization')) {
-      config.headers.Authorization = localStorage.getItem('Authorization');
-    }
- 
-    return config;
-  },
-  error => {
-    return Promise.reject(error);
-});
-
-
-axios.interceptors.response.use((response) => {
-  if (response.data.code == 401){
-	  uni.removeStorageSync(http.config.setTokenKey)
-	  uni.removeStorageSync(http.config.setUserKey)
-    this.$router.push("/login")
-  }
-  return response
-}, (response) => { /*  对响应错误做点什么 （statusCode !== 200）*/
-  console.log(response)
-  return Promise.reject(response)
-})
 
 export default router

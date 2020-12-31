@@ -28,7 +28,7 @@
             />
         </a-form-item>
         <a-form-item label="所属部门">
-            <a-cascader :options="options" placeholder="请选择所属部门信息" :required="true" @change="onChange" />
+            <a-cascader :options="options" placeholder="请选择所属部门信息" :required="true"/>
         </a-form-item>
         <a-form-item label="职务">
             <a-select
