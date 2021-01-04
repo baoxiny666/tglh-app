@@ -28,7 +28,7 @@
             <a-form-item>
               <a-input
                 v-decorator="[
-                  'password',
+                  'passWord',
                   { rules: [{ required: true, message: '密码不能为空!' }] },
                 ]"
                 type="password"
@@ -61,6 +61,15 @@
             </a-form-item>
           </a-form>
         </div>
+         <a-modal
+          title="提示"
+          :visible="confirmTipsVisible"
+          :confirm-loading="confirmTipsLoading"
+          @ok="handleConfirmTipsOk"
+          @cancel="handleConfirmTipsCancel"
+        >
+      <p>{{ ModalText }}</p>
+    </a-modal>
       </a-layout-content>
       <a-layout-footer class="LayoutFooter"></a-layout-footer>
     </a-layout>
@@ -69,9 +78,19 @@
 
 <script>
 import Aes from '../../utils/aes.js'
+
 export default {
   components:{
     Aes
+  },
+  data(){
+       return {
+          ModalText: '',
+          confirmTipsVisible: false,
+          confirmTipsLoading: false,
+          ModalText:'',
+          isSuccess:true
+       }
   },
   beforeCreate() {
     this.form = this.$form.createForm(this, { name: 'normal_login' });
@@ -84,29 +103,57 @@ export default {
         if (!err) {
           console.log('Received values of form: ', values);
           let data = {
-                       username: values.username,
-                       password: values.password
+                       userName: values.userName,
+                       passWord: values.passWord
           }
-          debugger;
+
           let enc_after = Aes.encrypt(data);
-          console.log(enc_after)
-          console.log(Aes.decrypt(enc_after))
-          console.log(that.$store.state.config.globalPath)
+          let globalstate = that.$store.state;
+          let globalPath = that.$store.state.config.globalPath;
+          let params = new URLSearchParams();
+          params.append('aesData', enc_after);
+
+          debugger
+          this.$axios({
+            method: 'post',
+            url: 'apis/jwt/login',
+            data:params
+          }).then(function (response) {
+            console.log(response);
+            if(response.data.isSuccess === false){
+              that.isSuccess = false
+              that.confirmTipsVisible = true
+              that.ModalText = '用户名或密码错误,请重新登录'
+              // that.$router.push('/login')
+            }else{
+              that.isSuccess = true
+              that.confirmTipsVisible = true
+              that.ModalText = '登陆成功,点击确定继续'
+              that.$store.commit('changeLogin',{Authorization:response.data.content.token})
+              that.$router.push('/index')
+            }
+          }).catch(function (error) {
+              console.log(error);
+          })
+         
           
-          // axios.post('/user/check', {
-          //     enc_after
-          // }).then(function (response) {
-          //     console.log(response);
-          // })
-          // .catch(function (error) {
-          //     console.log(error);
-          // });
-          this.$router.push('/index')
         }
       });
     },
     Regist(){
       this.$router.push('/Regist')
+    },
+    handleConfirmTipsOk(){
+        this.ModalText = '';
+        this.confirmLoading = true;
+        setTimeout(() => {
+          this.confirmTipsVisible = false;
+          this.confirmTipsLoading = false;
+        }, 100);
+    },
+    handleConfirmTipsCancel(){
+      console.log('点击取消按钮........')
+      this.confirmTipsVisible = false
     }
   },
 };

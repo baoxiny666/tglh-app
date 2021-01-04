@@ -5,6 +5,8 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
  
   state: {
+    //存储用户
+    currentUser:'',
     //存储token
     Authorization: localStorage.getItem('Authorization') ? localStorage.getItem('Authorization') : '',
     //全局路径
@@ -19,6 +21,7 @@ const store = new Vuex.Store({
   mutations: {
     // 修改token，并将token存入localStorage
     changeLogin (state, user) {
+      debugger;
       state.Authorization = user.Authorization;
       localStorage.setItem('Authorization', user.Authorization);
     }

@@ -3,7 +3,7 @@
         <a-layout-header class="layout-ua-header">
             <a-form layout="inline" class="layout-form" :form="formReportRecords" @submit="handleReportRecordsSubmit">
                  <a-space :size="size">
-                    <a-form-item>
+                    <a-form-item label="关键字">
                         <a-input placeholder="请输入搜索内容">
                             <a-icon type="filter" slot="prefix" />
                             <!-- <a-icon type="user" style="color:rgba(0,0,0,.25)" /> -->
@@ -19,7 +19,7 @@
                                     }
                                 ]"
                                 placeholder=""
-                                @change="handleRecordsSelectChange"
+                                    @change="handleRecordsSelectChange"
                                 >
                                 <a-select-option value="0">
                                     新增
@@ -38,11 +38,14 @@
                                 </a-select-option>
                             </a-select>
                         </a-form-item>
-                        <a-form-item>
-                            <a-range-picker
-                                :ranges="{ Today: [moment(), moment()], 'This Month': [moment(), moment().endOf('month')] }"
-                                @change="onRecordsChange"
-                            ></a-range-picker>
+                        <a-form-item label="时间选择">
+                            <a-config-provider :locale="locale">
+                                    <a-range-picker
+                                        :ranges="{ 今天: [moment(), moment()] }"
+                                        @change="onRepRecordsDateChange"
+                                    >
+                                    </a-range-picker>
+                            </a-config-provider  >
                         </a-form-item>
                         <a-form-item>
                             <a-button type="primary" icon="search">
@@ -51,8 +54,8 @@
                         </a-form-item>
                    
                         <a-form-item>
-                            <a-button type="danger" @click="showModal">
-                                增加
+                            <a-button type="danger" @click="showModal" icon="cloud-download">
+                                导出数据
                             </a-button>
                         </a-form-item>
                      </a-space>
@@ -77,19 +80,30 @@
 
 <script> 
     import ReportRecordsList from './ReportRecordsList'
+    import zhCN from 'ant-design-vue/es/locale/zh_CN';
+    import moment from 'moment';
+    import 'moment/locale/zh-cn';
+    moment.locale('zh-cn');
     export default {
         components: {
             ReportRecordsList
         },
         data() {
             return {
-                size:67,
+                size:'middle',
                 formadd: this.$form.createForm(this),
                 dialogStatus:'',
-                visible: false
+                visible: false,
+                dateFormat: 'YYYY/MM/DD',
+                monthFormat: 'YYYY/MM',
+                locale:zhCN,
+                moment,
+                enUS,
+                zhCN
             }
         },
         methods: {
+                moment,
                 onCellChange(key, dataIndex, value) {
                     const dataSource = [...this.dataSource];
                     const target = dataSource.find(item => item.key === key);
@@ -149,7 +163,11 @@
                 },
                 handleReportRecordsSubmit(){
                     
-                }
+                },
+                onRepRecordsDateChange(dates, dateStrings) {
+                    alert('From: ', dates[0], ', to: ', dates[1]);
+                    alert('From: ', dateStrings[0], ', to: ', dateStrings[1]);
+                },
             }
     }
 </script>
