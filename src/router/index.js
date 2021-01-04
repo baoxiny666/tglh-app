@@ -9,9 +9,12 @@ import ReportsRecords from '../components/reportrecords/ReportRecords.vue'
 Vue.use(VueRouter)
 
 const routes = [
-
   {
     path:'/',
+    redirect:'login'
+  },
+  {
+    path:'/login',
     name:'登录',
     component:Login
   },
@@ -53,8 +56,8 @@ router.beforeEach((to, from, next) => {
     next();
   } else {
     let token = localStorage.getItem('Authorization');
- 
-    if (token === 'null' || token === '') {
+    debugger;
+    if (token === null || token === '') {
       next('/login');
     } else {
       next();

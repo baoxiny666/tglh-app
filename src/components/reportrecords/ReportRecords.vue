@@ -102,6 +102,21 @@
                 zhCN
             }
         },
+        mounted(){
+        
+          let globalstate = this.$store.state;
+          let globalPath = this.$store.state.config.globalPath;
+
+          this.$axios({
+            method: 'post',
+            url: 'apis/report/select'
+          }).then(function (response) {
+            console.log(response);
+           
+          }).catch(function (error) {
+              console.log(error);
+          })
+        },
         methods: {
                 moment,
                 onCellChange(key, dataIndex, value) {
