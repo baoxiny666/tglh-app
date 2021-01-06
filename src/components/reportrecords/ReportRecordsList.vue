@@ -59,74 +59,74 @@
                         align: 'center'
                     }
     ];
-const data = [
-  {
-    id: '1',
-    area_no:'linai',
-    area_name: 'John Brown',
-    manage_user:34567,
-    manage_user_name: '数字信息化部-软件科',
-    manage_phone: '科员',
-    desc:'周检查',
-    record_status:'周检查',
-    create_time:'2021-1-18'
-  },
-  {
-    id: '2',
-    area_no:'linai',
-    area_name: 'John Brown',
-    manage_user:34567,
-    manage_user_name: '数字信息化部-软件科',
-    manage_phone: '科员',
-    desc:'周检查',
-    record_status:'周检查',
-    create_time:'2021-1-18'
-  },
-  {
-    id: '3',
-    area_no:'linai',
-    area_name: 'John Brown',
-    manage_user:34567,
-    manage_user_name: '数字信息化部-软件科',
-    manage_phone: '科员',
-    desc:'周检查',
-    record_status:'周检查',
-    create_time:'2021-1-18'
-  },
-  {
-    id: '4',
-    area_no:'linai',
-    area_name: 'John Brown',
-    manage_user:34567,
-    manage_user_name: '数字信息化部-软件科',
-    manage_phone: '科员',
-    desc:'周检查',
-    record_status:'周检查',
-    create_time:'2021-1-18'
-  },
-  {
-    id: '5',
-    area_no:'linai',
-    area_name: 'John Brown',
-    manage_user:34567,
-    manage_user_name: '数字信息化部-软件科',
-    manage_phone: '科员',
-    desc:'周检查',
-    record_status:'周检查',
-    create_time:'2021-1-18'
-  },
- {
-    id: '6',
-    area_no:'linai',
-    area_name: 'John Brown',
-    manage_user:34567,
-    manage_user_name: '数字信息化部-软件科',
-    manage_phone: '科员',
-    desc:'周检查',
-    record_status:'周检查',
-    create_time:'2021-1-18'
-  },
-];
+    const data = [
+      {
+        id: '1',
+        area_no:'linai',
+        area_name: 'John Brown',
+        manage_user:34567,
+        manage_user_name: '数字信息化部-软件科',
+        manage_phone: '科员',
+        desc:'周检查',
+        record_status:'周检查',
+        create_time:'2021-1-18'
+      },
+      {
+        id: '2',
+        area_no:'linai',
+        area_name: 'John Brown',
+        manage_user:34567,
+        manage_user_name: '数字信息化部-软件科',
+        manage_phone: '科员',
+        desc:'周检查',
+        record_status:'周检查',
+        create_time:'2021-1-18'
+      },
+      {
+        id: '3',
+        area_no:'linai',
+        area_name: 'John Brown',
+        manage_user:34567,
+        manage_user_name: '数字信息化部-软件科',
+        manage_phone: '科员',
+        desc:'周检查',
+        record_status:'周检查',
+        create_time:'2021-1-18'
+      },
+      {
+        id: '4',
+        area_no:'linai',
+        area_name: 'John Brown',
+        manage_user:34567,
+        manage_user_name: '数字信息化部-软件科',
+        manage_phone: '科员',
+        desc:'周检查',
+        record_status:'周检查',
+        create_time:'2021-1-18'
+      },
+      {
+        id: '5',
+        area_no:'linai',
+        area_name: 'John Brown',
+        manage_user:34567,
+        manage_user_name: '数字信息化部-软件科',
+        manage_phone: '科员',
+        desc:'周检查',
+        record_status:'周检查',
+        create_time:'2021-1-18'
+      },
+    {
+        id: '6',
+        area_no:'linai',
+        area_name: 'John Brown',
+        manage_user:34567,
+        manage_user_name: '数字信息化部-软件科',
+        manage_phone: '科员',
+        desc:'周检查',
+        record_status:'周检查',
+        create_time:'2021-1-18'
+      },
+    ];
 
 export default {
   data() {

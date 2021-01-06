@@ -12,10 +12,8 @@ axios.interceptors.request.use((config) => {
 axios.interceptors.response.use(res => {
   const { code } = res.data
   let that = this
-  debugger
+  
   if (code === 407) {
- 
-
     // 2. 删除本地token 和 user_id
     localStorage.removeItem('Authorization')
 
@@ -27,8 +25,8 @@ axios.interceptors.response.use(res => {
 })
 
  
-axios.install = (Vue) => {
-  Vue.prototype.$axios = axios
-}
+// axios.install = (Vue) => {
+//   Vue.prototype.$axios = axios
+// }
  
 export default axios

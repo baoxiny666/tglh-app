@@ -11,7 +11,7 @@ const store = new Vuex.Store({
     Authorization: localStorage.getItem('Authorization') ? localStorage.getItem('Authorization') : '',
     //全局路径
     config:{
-      globalPath:'http://10.34.3.12:8199/',
+      globalPath:'http://10.34.3.12:8799/',
       encryptIv :'fe8a5d47f0bdf4f0',
       encryptKey :'87a1ec63db4c1d34'
     }

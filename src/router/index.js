@@ -51,12 +51,10 @@ const router = new VueRouter({
 
 // 使用 router.beforeEach 注册一个全局前置守卫，判断用户是否登陆
 router.beforeEach((to, from, next) => {
-  debugger;
   if (to.path === '/login') {
     next();
   } else {
     let token = localStorage.getItem('Authorization');
-    debugger;
     if (token === null || token === '') {
       next('/login');
     } else {
