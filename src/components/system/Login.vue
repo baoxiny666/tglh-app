@@ -78,7 +78,7 @@
 
 <script>
 import Aes from '../../utils/aes.js'
-
+import Api from '@/api/login/login.js'
 export default {
   components:{
     Aes
@@ -113,7 +113,7 @@ export default {
           let params = new URLSearchParams();
           params.append('aesData', enc_after);
 
-          debugger
+      
           this.$axios({
             method: 'post',
             url: 'apis/jwt/login',

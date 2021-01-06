@@ -2,7 +2,7 @@
     <a-table 
         :row-selection="rowSelection"
         :columns="columns"
-        :data-source="data"
+        :data-source="message"
         :pagination="pagination"
         >
             <span slot="action" slot-scope="record,index">
@@ -59,6 +59,7 @@
                         align: 'center'
                     }
     ];
+    
     const data = [
       {
         id: '1',
@@ -129,9 +130,8 @@
     ];
 
 export default {
-  data() {
-    return {
-        data,
+   data(){
+      return {
         columns,
         pagination:{
               defaultPageSize:2,
@@ -142,8 +142,9 @@ export default {
               hideOnSinglePage:false,
               showQuickJumper:true
         }
-    };
+    }
   },
+  props:["message"],
   methods:{
       handleUserEdit(params){
         console.log(params)
@@ -166,6 +167,9 @@ export default {
         })
       }
     }
+  },
+  mounted(){
+    
   }
 }
 </script>

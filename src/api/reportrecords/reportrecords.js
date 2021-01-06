@@ -22,7 +22,19 @@ export const getReportStatus = () => {
 }
 
 
+export const reportRecordListApi = (data) => {
+    return axios.post('apis/report/select', {
+		data
+	}).then(res => {
+		return res.data
+	}).catch(err => {
+	
+	})
+}
+
+
 export default{
     getDepartArea,
-    getReportStatus
+    getReportStatus,
+    reportRecordListApi
 }

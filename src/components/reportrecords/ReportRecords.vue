@@ -54,23 +54,19 @@
             </a-form>
         </a-layout-header>
         <a-layout-content class="layout-ua-content">
-            <report-records-list></report-records-list>
+            <report-records-list :message="reportRecordData"></report-records-list>
+            <!-- :reportRecordData="reportRecordData" -->
         </a-layout-content>
         <a-layout-footer class="layout-ua-footer">
         </a-layout-footer>
-
-
-      
     </a-layout>
     
 </template>
 
 <script> 
+    import Aes from '../../utils/aes.js'
     import ReportRecordsList from './ReportRecordsList'
     import zhCn from 'ant-design-vue/es/date-picker/locale/zh_CN';
-    import moment from 'moment'; 
-    import 'moment/locale/zh-cn';
-    moment.locale('zh-cn');
     import Api from '@/api/reportrecords/reportrecords.js'
     export default {
         components: {
@@ -78,7 +74,6 @@
         },
         data() {
             return {
-                moment,
                 size:'middle',
                 dialogStatus:'',
                 visible: false,
@@ -91,17 +86,54 @@
                 end_time:'',
                 depart_id:'',
                 area_no:'',
+                search:'',
+                status:'',
                 locale:zhCn,
-                reportRecordConditionForm: this.$form.createForm(this, { name: 'coordinated' })
+                reportRecordConditionForm: this.$form.createForm(this, { name: 'coordinated' }),
+                reportRecordData:[]
+                
             }
         },
-        mounted(){
-           
-            this.initDepartFactory();
-            this.initReportStatus();
-        },
         methods: {
-                moment,
+           
+                reportRecordListApi(params){
+                    let data;
+                    if(params == undefined){
+                        data = {
+                            start_time:this.start_time,
+                            end_time:this.end_time,
+                            area_no:this.area_no,
+                            depart_id:this.depart_id,
+                            search:this.search,
+                            status:this.status
+                        } 
+                    }else{
+                        data = params;
+                    }
+                   
+                    console.log("保证"+data);
+                    let enc_after  = Aes.encrypt(data);
+                  
+                    let transfer = new URLSearchParams();
+                    transfer.append('aesData', enc_after);
+                    //let reportRecordList = await Api.reportRecordListApi(total);
+                   
+
+                    this.$axios({
+                        method: 'post',
+                        url: 'apis/report/select',
+                        data:transfer
+                    }).then((response)=> {
+
+                       debugger
+                       this.reportRecordData = response.data.data
+
+                    }).catch(function (error) {
+                        console.log(error);
+                    })
+
+
+                },
                 async initDepartFactory(){
                     let departArea = await  Api.getDepartArea();
 					this.departAreaOptions = departArea
@@ -116,30 +148,15 @@
                         if (!err) {
                             console.log('Received values of form: ', values);   
                             this.transferParams = values;
-                            this.depart_id =  this.transferParams.area_select[0];
-                            this.area_no =  this.transferParams.area_select[1];
+                            this.depart_id =  this.transferParams.area_select[0]== undefined?"": this.transferParams.area_select[0];
+                            this.area_no =  this.transferParams.area_select[1]== undefined?"": this.transferParams.area_select[1];
                             this.transferParams["depart_id"] =  this.depart_id
                             this.transferParams["area_no"] =  this.area_no
                             this.transferParams["start_time"] = this.start_time
                             this.transferParams["end_time"] =  this.end_time
 
-                            let enc_after = Aes.encrypt(this.transferParams);
-                            let globalstate = this.$store.state;
-                            let globalPath = this.$store.state.config.globalPath;
-                            let params = new URLSearchParams();
-                            params.append('aesData', enc_after);
 
-
-                            // this.$axios({
-                            //     method: 'post',
-                            //     url: 'apis/report/select',
-                            //     data:params
-                            // }).then(function (response) {
-                            //     console.log(response);
-                                
-                            // }).catch(function (error) {
-                            //     console.log(error);
-                            // })
+                            this.reportRecordListApi(this.transferParams);
          
                         }
                     });
@@ -151,6 +168,9 @@
                    
                 },
                 onSubMenuChange(){
+
+                },
+                departAreaChange(){
 
                 }
                 // ,getCurrentLData(){
@@ -178,6 +198,11 @@
                 //     }
                 //     return m;
                 // }
+            },
+            mounted(){
+                this.initDepartFactory();
+                this.initReportStatus();
+                this.reportRecordListApi()
             }
     }
 </script>
