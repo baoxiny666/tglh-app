@@ -21,9 +21,9 @@
                                     'status'
                                 ]"
                                 placeholder=""
-                                  
+                                @change="statusChange"
                                 >
-                                <a-select-option  v-for="item in reportRecordOptions" :key="item.id" :value="item.flag">
+                                <a-select-option  v-for="item in reportRecordOptions"  :key="item.id" :value="item.flag">
                                     {{ item.name }}
                                 </a-select-option>
                                 
@@ -124,10 +124,7 @@
                         url: 'apis/report/select',
                         data:transfer
                     }).then((response)=> {
-
-                       debugger
                        this.reportRecordData = response.data.data
-
                     }).catch(function (error) {
                         console.log(error);
                     })
@@ -148,8 +145,10 @@
                         if (!err) {
                             console.log('Received values of form: ', values);   
                             this.transferParams = values;
-                            this.depart_id =  this.transferParams.area_select[0]== undefined?"": this.transferParams.area_select[0];
-                            this.area_no =  this.transferParams.area_select[1]== undefined?"": this.transferParams.area_select[1];
+                            console.log("回到"+this.transferParams.area_select)
+                            debugger
+                            this.depart_id =  this.transferParams.depart_area_select == undefined? "": this.transferParams.depart_area_select[0]
+                            this.area_no =  this.transferParams.depart_area_select == undefined? "": this.transferParams.depart_area_select[1]
                             this.transferParams["depart_id"] =  this.depart_id
                             this.transferParams["area_no"] =  this.area_no
                             this.transferParams["start_time"] = this.start_time
@@ -164,14 +163,17 @@
                 onRepRecordsDateChange(dates, dateStrings) {
                     this.start_time =  dateStrings[0];
                     this.end_time = dateStrings[1];
-                  
+                    this.reportRecordListApi();
                    
                 },
-                onSubMenuChange(){
-
+                departAreaChange(value){
+                    this.depart_id = value[0];
+                    this.area_no = value[1]; 
+                    this.reportRecordListApi();
                 },
-                departAreaChange(){
-
+                statusChange(value){
+                    this.status = value;
+                    this.reportRecordListApi();
                 }
                 // ,getCurrentLData(){
                 //     return this.getDay(0);

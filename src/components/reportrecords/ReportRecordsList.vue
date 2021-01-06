@@ -3,21 +3,29 @@
         :row-selection="rowSelection"
         :columns="columns"
         :data-source="message"
-        :pagination="pagination"
+       
         >
             <span slot="action" slot-scope="record,index">
                 <a @click="handleUserEdit(index)">详情</a>
                 <a-divider type="vertical" />
                 <a @click="handleUserDel(index)">删除</a>
             </span>
-        <!-- <a slot="name" slot-scope="text">{{ text }}</a> -->
+        <!-- <a slot="name" slot-scope="text">{{ text }}</a>
+         :pagination="pagination" -->
+
+        
     </a-table>
+    
   
 </template>
 <script>
     const columns = [
                     {
                         title:'序号',
+                        dataIndex:'xh'
+                    },
+                    {
+                        title:'ID',
                         dataIndex:'id'
                     },
                     {
@@ -46,7 +54,7 @@
                     },
                     {
                         title: '记录状态',
-                        dataIndex: 'record_status'
+                        dataIndex: 'status'
                     },
                     {
                         title: '创建时间',
@@ -134,10 +142,10 @@ export default {
       return {
         columns,
         pagination:{
-              defaultPageSize:2,
+              defaultPageSize:10,
               showTotal: total => `共 ${total} 条数据`,
               showSizeChanger:true,
-              pageSizeOptions: ['2', '10', '15', '20'],
+              pageSizeOptions: ['10'],
               onShowSizeChange:(current, pageSize)=>this.pageSize = pageSize,
               hideOnSinglePage:false,
               showQuickJumper:true
