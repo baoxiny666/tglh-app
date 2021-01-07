@@ -1,24 +1,36 @@
 <template>
-    <a-table 
+    <a-row>
+      <report-records-detail
+          :reportRecordsDetailVisible="rrdDetailVisible"
+          :reportRecordsDetailContent="reportRDetail"
+          @cancel="handleRrdDetailCancel()"
+      >
+      </report-records-detail>
+      <a-table 
         :row-selection="rowSelection"
         :columns="columns"
         :data-source="message"
         :pagination="pagination"
         >
+
+           
+         
             <span slot="action" slot-scope="record,index">
-                <a @click="handleUserEdit(index)">详情</a>
+                <a @click="viewDetail(index)">详情</a>
                 <a-divider type="vertical" />
-                <a @click="handleUserDel(index)">删除</a>
+                <a @click="deleteRecord(index)">删除</a>
             </span>
+           
     </a-table>
+    </a-row>
     
-  
 </template>
 <script>
+
     const columns = [
                     {
-                        title:'序号',
-                        dataIndex:'xh'
+                      title: '序号',
+                      dataIndex: 'xh'
                     },
                     {
                         title:'ID',
@@ -30,15 +42,15 @@
                     },
                     {
                         title: '区域名称',
-                        dataIndex: 'area_name',
+                        dataIndex: 'area_name'
                     },
                     {
                         title: '负责人编号',
-                        dataIndex: 'manage_user',
+                        dataIndex: 'manage_user'
                     },
                     {
                         title: '负责人姓名',
-                        dataIndex: 'manage_user_name',
+                        dataIndex: 'manage_user_name'
                     },
                     {
                         title: '负责人手机号',
@@ -67,17 +79,31 @@
                         align: 'center'
                     }
     ];
+import ReportRecordsDetail from './ReportRecordsDetail.vue'
+import Aes from '../../utils/aes.js'
 export default {
+   components:{
+     ReportRecordsDetail
+   },
    data(){
       return {
         columns,
+        recordId:'',
+        reportRDetail:{},
+        rrdDetailVisible:false,
         pagination:{
-              position:'both',
-              defaultPageSize:9,
-              showTotal: total => `共 ${total} 条数据`,
-              onShowSizeChange:(current, pageSize)=>this.pageSize = pageSize,
-              hideOnSinglePage:false,
-              showQuickJumper:true
+                defaultCurrent: 1, 
+                defaultPageSize: 9, 
+                total: 0, 
+                pageSizeOptions: ["5", "10", "15", "20"],
+
+                position:'both',
+                showTotal: (total, range) => {
+                  return range[0] + '-' + range[1] + ' 共' + total + '条'
+                },
+                onShowSizeChange:(current, pageSize)=>this.pageSize = pageSize,
+                hideOnSinglePage:true,
+                showQuickJumper:true
         }
     }
   },
@@ -88,7 +114,42 @@ export default {
       },
       handleUserDel(params){
         console.log(params)
+      },
+      customRender: function(t, r, index) {
+        return parseInt(index) + 1
+      },
+      onShowSizeChange: (current, pageSize) => {
+        this.pagination.defaultCurrent = 1
+        this.pagination.defaultPageSize = pageSize
+      },
+      // 改变每页数量时更新显示
+      onChange: (current, size) => {
+        this.pagination.defaultCurrent = current
+        this.pagination.defaultPageSize = size
+        
+      },
+      viewDetail(index){
+        this.recordId = index.id
+        this.rrdDetailVisible = true
+        let recordIdObj = {"id":this.recordId};
+        let enc_after  = Aes.encrypt(recordIdObj);     
+        let transfer = new URLSearchParams();
+        transfer.append('aesData', enc_after); 
+        this.$axios({
+            method: 'post',
+            url: 'apis/report/selectDetail',
+            data:transfer
+        }).then((response)=> {
+            this.reportRDetail = response.data.data[0]
+        }).catch(function (error) {
+            console.log(error);
+        })
+         
+      },
+      handleRrdDetailCancel(){
+        this.rrdDetailVisible = false
       }
+
   },
   computed: {
     rowSelection() {
