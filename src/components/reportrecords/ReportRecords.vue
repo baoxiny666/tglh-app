@@ -1,6 +1,10 @@
 <template>
     <a-layout>
         <a-layout-header class="layout-ua-header">
+            <form id="myform" name="myform" method="post" action="/apis/report/export" target="iframe">
+        　　　　<input type="hidden" name="aesData" :value="excelParams">
+            </form>
+            <iframe id="iframe" name="iframe" style="display:none"></iframe>
             <a-form layout="inline" class="layout-form" :form="reportRecordConditionForm" >
                  <a-space :size="size">
                     <a-form-item label="关键字">
@@ -13,16 +17,18 @@
                     <a-form-item label="区域选择">
                         <a-cascader v-decorator="[
                                     'depart_area_select'
-                                ]" :options="departAreaOptions" placeholder="请选择" @change="departAreaChange" />
+                                ]"  :options="departAreaOptions" placeholder="请选择" @change="departAreaChange" />
                     </a-form-item>
                     <a-form-item label="状态选择">
-                            <a-select  default-value="0" style="width: 120px"
+                            <a-select   style="width: 120px"
                                 v-decorator="[
                                     'status'
                                 ]"
+                               
                                 placeholder=""
                                 @change="statusChange"
                                 >
+                                
                                 <a-select-option  v-for="item in reportRecordOptions"  :key="item.id" :value="item.flag">
                                     {{ item.name }}
                                 </a-select-option>
@@ -46,7 +52,7 @@
                         </a-form-item>
                    
                         <a-form-item>
-                            <a-button type="danger"  icon="cloud-download">
+                            <a-button type="danger" @click="exportExcel"  icon="cloud-download">
                                 导出数据
                             </a-button>
                         </a-form-item>
@@ -54,8 +60,7 @@
             </a-form>
         </a-layout-header>
         <a-layout-content class="layout-ua-content">
-            <report-records-list :message="reportRecordData"></report-records-list>
-            <!-- :reportRecordData="reportRecordData" -->
+            <report-records-list style="height:710px !important;overflow:auto" :message="reportRecordData"></report-records-list>
         </a-layout-content>
         <a-layout-footer class="layout-ua-footer">
         </a-layout-footer>
@@ -74,8 +79,9 @@
         },
         data() {
             return {
+                statusDefault:-1,
+                departAreaDefault:-1,
                 size:'middle',
-                dialogStatus:'',
                 visible: false,
                 dateFormat: 'YYYY/MM/DD',
                 monthFormat: 'YYYY/MM',
@@ -90,7 +96,9 @@
                 status:'',
                 locale:zhCn,
                 reportRecordConditionForm: this.$form.createForm(this, { name: 'coordinated' }),
-                reportRecordData:[]
+                reportRecordData:[],
+                excelParams:{},
+                authorize:localStorage.getItem("Authorization")
                 
             }
         },
@@ -110,12 +118,13 @@
                     }else{
                         data = params;
                     }
-                   
-                    console.log("保证"+data);
+
+                    
                     let enc_after  = Aes.encrypt(data);
-                  
+                   
                     let transfer = new URLSearchParams();
-                    transfer.append('aesData', enc_after);
+                    transfer.append('aesData', enc_after); 
+                    this.excelParams = enc_after;
                     //let reportRecordList = await Api.reportRecordListApi(total);
                    
 
@@ -160,6 +169,11 @@
                         }
                     });
                 },
+                exportExcel(){
+                    let exportForm = document.getElementById("myform");
+                    exportForm.submit();
+                   
+                },
                 onRepRecordsDateChange(dates, dateStrings) {
                     this.start_time =  dateStrings[0];
                     this.end_time = dateStrings[1];
@@ -167,12 +181,25 @@
                    
                 },
                 departAreaChange(value){
-                    this.depart_id = value[0];
-                    this.area_no = value[1]; 
+
+                    if(value[0] === "-1"){
+                        this.depart_id = "";
+                        this.area_no = ""; 
+                    }else{
+                        this.depart_id = value[0];
+                        this.area_no = value[1]; 
+                    }
+                    
                     this.reportRecordListApi();
                 },
                 statusChange(value){
-                    this.status = value;
+                    debugger
+                    if(value === "-1"){
+                        this.status = "";
+                    }else{
+                        this.status = value;
+                    }
+                    
                     this.reportRecordListApi();
                 }
                 // ,getCurrentLData(){
@@ -218,6 +245,7 @@
         height:3rem !important;
         background: #fbfbfc !important;
     }
+
 
     .layout-ua-content{
         width:100% !important;
