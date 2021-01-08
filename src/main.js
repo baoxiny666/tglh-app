@@ -6,12 +6,13 @@ import './plugins/ant-design-vue.js'
 import Antd from 'ant-design-vue'
 import axios from './interceptor/interceptor.js'
 import devServer from '../vue.config.js'
-
+import CryptoJS from 'crypto-js'
 import Viewer from 'v-viewer'
 import 'viewerjs/dist/viewer.css'
 Vue.use(Viewer)
 Viewer.setDefaults({
   Options: {
+    'zIndex': 999999,
     'inline': true, // 启用 inline 模式
     'button': true, // 显示右上角关闭按钮
     'navbar': true, // 显示缩略图导航

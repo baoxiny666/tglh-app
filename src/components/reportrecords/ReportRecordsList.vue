@@ -3,6 +3,7 @@
       <report-records-detail
           :reportRecordsDetailVisible="rrdDetailVisible"
           :reportRecordsDetailContent="reportRDetail"
+          :requestPicsContent="newRequestPics"
           @cancel="handleRrdDetailCancel()"
       >
       </report-records-detail>
@@ -91,6 +92,8 @@ export default {
         recordId:'',
         reportRDetail:{},
         rrdDetailVisible:false,
+        requestPics:[],
+        newRequestPics:[],
         pagination:{
                 defaultCurrent: 1, 
                 defaultPageSize: 9, 
@@ -129,6 +132,7 @@ export default {
         
       },
       viewDetail(index){
+        let that = this
         this.recordId = index.id
         this.rrdDetailVisible = true
         let recordIdObj = {"id":this.recordId};
@@ -141,6 +145,16 @@ export default {
             data:transfer
         }).then((response)=> {
             this.reportRDetail = response.data.data[0]
+            this.requestPics = JSON.parse(response.data.data[0].images);
+
+            let _repuestPics = this.requestPics
+           
+            this.newRequestPics = _repuestPics.map(function (item,index,_repuestPics) { 
+                return that.$store.state.config.globalUploadPics + item; 
+            }),
+            console.log(this.newRequestPics)
+           
+
         }).catch(function (error) {
             console.log(error);
         })
@@ -148,7 +162,18 @@ export default {
       },
       handleRrdDetailCancel(){
         this.rrdDetailVisible = false
+      },
+      //并发请求图片文件
+      togetherRequestPics(){
+        this.$axios.all([searchTopic(), searchs()])
+        .then(() => {
+            this.$axios.spread((res) => {
+
+            })
+          }
+        );
       }
+
 
   },
   computed: {

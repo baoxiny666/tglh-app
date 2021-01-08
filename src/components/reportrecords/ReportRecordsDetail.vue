@@ -36,9 +36,9 @@
                 <a-textarea v-decorator="['desc']"  :rows="4" :value="reportRecordsDetailContent.desc" />
             </a-form-item>
             <a-form-item label="隐患照片">
-                <a-card hoverable style="width: 240px">
-                    <viewer >
-                        <img/>
+                <a-card hoverable style="width: 400px">
+                    <viewer  :images="requestPicsContent">
+                        <img v-for="src in requestPicsContent" :src="src" :key="src" width="100%"/>
                     </viewer>
                 </a-card>
             </a-form-item>
@@ -94,7 +94,7 @@ export default {
             
         }
     },
-    props:["reportRecordsDetailVisible","reportRecordsDetailContent"],
+    props:["reportRecordsDetailVisible","reportRecordsDetailContent","requestPicsContent"],
     mounted(){
 
     }

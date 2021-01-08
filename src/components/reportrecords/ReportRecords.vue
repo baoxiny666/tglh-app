@@ -155,7 +155,7 @@
                             console.log('Received values of form: ', values);   
                             this.transferParams = values;
                             console.log("回到"+this.transferParams.area_select)
-                            debugger
+                           
                             this.depart_id =  this.transferParams.depart_area_select == undefined? "": this.transferParams.depart_area_select[0]
                             this.area_no =  this.transferParams.depart_area_select == undefined? "": this.transferParams.depart_area_select[1]
                             this.transferParams["depart_id"] =  this.depart_id
@@ -193,7 +193,6 @@
                     this.reportRecordListApi();
                 },
                 statusChange(value){
-                    debugger
                     if(value === "-1"){
                         this.status = "";
                     }else{
