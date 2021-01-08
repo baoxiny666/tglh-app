@@ -6,7 +6,6 @@ import store from '../store/index.js'
 // 拦截request,设置全局请求为ajax请求
 axios.interceptors.request.use((config) => {
   config.headers['time'] = new Date().getTime().toString()
-  console.log(store.state)
   let _sign = func.signEncrypt(store.state.config.signKey + config.headers['time'])
   config.headers['sign'] = _sign
   config.headers['X-Requested-With'] = 'XMLHttpRequest'

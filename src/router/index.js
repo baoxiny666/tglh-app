@@ -1,11 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import axios from 'axios'
-import Login from '../components/system/Login'
-import Register from '../components/system/Register'
-import Index from '../components/home/Index'
-import UserManage from '../components/usermanage/UserManage'
-import ReportsRecords from '../components/reportrecords/ReportRecords.vue'
+import Index from '../views/index.vue'
+import Login from '../components/Login/Login.vue'
+import ReportsRecords from '../components/ReportRecords/ReportRecords.vue'
+import UserCharts from '../components/Layout/UserCharts.vue'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -19,23 +18,20 @@ const routes = [
     component:Login
   },
   {
-    path:'/register',
-    name:'注册',
-    component:Register
-  },
-  {
     path:'/index',
     name:'首页',
     component:Index,
     children:[
       {
-        path: '/userManage',
-        name: '用户管理',
-        component:UserManage
+        path:'/UserCharts',
+        name:'统计数据',
+        meta:{title:'统计数据'},
+        component:UserCharts
       },
       {
-        path: '/reportsRecords',
+        path: '/ReportRecords',
         name: '上报记录',
+        meta:{title:'上报记录'},
         component:ReportsRecords
       }
     ]

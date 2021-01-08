@@ -8,11 +8,11 @@
             <a-form layout="inline" class="layout-form" :form="reportRecordConditionForm" >
                  <a-space :size="size">
                     <a-form-item label="关键字">
-                        <a-input placeholder="请输入搜索内容" v-decorator="[
+                        <a-input-search v-model="search"   @search="onSearchInput()" placeholder="请输入搜索内容" v-decorator="[
                                     'search'
                                 ]">
                             <a-icon type="filter" slot="prefix" />
-                        </a-input>
+                        </a-input-search>
                     </a-form-item>
                     <a-form-item label="区域选择">
                         <a-cascader v-decorator="[
@@ -102,9 +102,15 @@
                 
             }
         },
+        watch: {
+                search(newValue, oldValue) {
+                    console.log(newValue)
+                }
+        },
         methods: {
            
                 reportRecordListApi(params){
+                    debugger;
                     let data;
                     if(params == undefined){
                         data = {
@@ -150,21 +156,25 @@
 					this.reportRecordOptions = reportStatus
                 },
                 handleReportRecordsSubmit(){
+                    let that = this
                     this.reportRecordConditionForm.validateFields((err, values) => {
                         if (!err) {
                             console.log('Received values of form: ', values);   
-                            this.transferParams = values;
-                            console.log("回到"+this.transferParams.area_select)
-                           
-                            this.depart_id =  this.transferParams.depart_area_select == undefined? "": this.transferParams.depart_area_select[0]
-                            this.area_no =  this.transferParams.depart_area_select == undefined? "": this.transferParams.depart_area_select[1]
-                            this.transferParams["depart_id"] =  this.depart_id
-                            this.transferParams["area_no"] =  this.area_no
-                            this.transferParams["start_time"] = this.start_time
-                            this.transferParams["end_time"] =  this.end_time
+                            that.transferParams = values;
+                            console.log("回到"+that.transferParams.depart_area_select)
+                            debugger;
+                            that.status = that.transferParams.status == "-1"?"":that.transferParams.status
+                            that.depart_id =  that.transferParams.depart_area_select == undefined || that.transferParams.depart_area_select[0] == "-1"?
+                                                 "": that.transferParams.depart_area_select[0]
+                            that.area_no =  that.transferParams.depart_area_select == undefined  || that.transferParams.depart_area_select[1] == undefined?
+                                                 "": that.transferParams.depart_area_select[1]
+                            that.transferParams["depart_id"] =  that.depart_id
+                            that.transferParams["area_no"] =  that.area_no
+                            that.transferParams["start_time"] = that.start_time
+                            that.transferParams["end_time"] =  that.end_time
+                            that.transferParams["status"] = that.status
 
-
-                            this.reportRecordListApi(this.transferParams);
+                            that.reportRecordListApi(that.transferParams);
          
                         }
                     });
@@ -200,6 +210,11 @@
                     }
                     
                     this.reportRecordListApi();
+                },
+                
+                onSearchInput(){
+                    
+                    this.reportRecordListApi()
                 }
                 // ,getCurrentLData(){
                 //     return this.getDay(0);

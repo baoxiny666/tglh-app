@@ -18,8 +18,8 @@
          
             <span slot="action" slot-scope="record,index">
                 <a @click="viewDetail(index)">详情</a>
-                <a-divider type="vertical" />
-                <a @click="deleteRecord(index)">删除</a>
+                <!-- <a-divider type="vertical" />
+                <a @click="deleteRecord(index)">删除</a> -->
             </span>
            
     </a-table>
@@ -34,8 +34,9 @@
                       dataIndex: 'xh'
                     },
                     {
-                        title:'ID',
-                        dataIndex:'id'
+                      title:'ID',
+                      dataIndex:'id',
+                      hidden:true
                     },
                     {
                         title: '区域编号',

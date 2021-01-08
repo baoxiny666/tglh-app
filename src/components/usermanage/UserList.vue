@@ -7,8 +7,8 @@
         >
             <span slot="action" slot-scope="record,index">
                 <a @click="handleUserEdit(index)">编辑</a>
-                <a-divider type="vertical" />
-                <a @click="handleUserDel(index)">删除</a>
+                <!-- <a-divider type="vertical" />
+                <a @click="handleUserDel(index)">删除</a> -->
             </span>
         <!-- <a slot="name" slot-scope="text">{{ text }}</a> -->
     </a-table>
