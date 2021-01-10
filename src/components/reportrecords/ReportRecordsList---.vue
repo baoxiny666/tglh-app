@@ -12,9 +12,10 @@
         :columns="columns"
         :data-source="message"
         :pagination="pagination"
-        :scroll="{ x: 2000}"
         >
-        <a slot="action" slot-scope="text" href="javascript:;">action</a>
+
+           
+         
             <span slot="action" slot-scope="record,index">
                 <a @click="viewDetail(index)">详情</a>
                 <!-- <a-divider type="vertical" />
@@ -26,74 +27,59 @@
     
 </template>
 <script>
+
     const columns = [
                     {
                       title: '序号',
-                      dataIndex: 'xh',
-                      width:60
+                      dataIndex: 'xh'
                     },
                     {
                       title:'ID',
                       dataIndex:'id',
-                      hidden:false,
-                      width:70
+                      hidden:true
                     },
-                     {
-                        title: '部门名称',
-                        dataIndex: 'depart_name',
-                        width:100
+                    {
+                        title: '区域编号',
+                        dataIndex: 'area_no'
                     },
-                     {
+                    {
                         title: '区域名称',
-                        dataIndex: 'area_name',
-                        width:180
+                        dataIndex: 'area_name'
                     },
-                   
                     {
                         title: '负责人编号',
-                        dataIndex: 'manage_user',
-                        width:110
+                        dataIndex: 'manage_user'
                     },
                     {
                         title: '负责人姓名',
-                        dataIndex: 'manage_user_name',
-                        width:110
+                        dataIndex: 'manage_user_name'
                     },
                     {
                         title: '负责人手机号',
-                        dataIndex: 'manage_phone',
-                         width:120
+                        dataIndex: 'manage_phone'
                     },
                     {
                         title: '隐患描述',
-                        dataIndex: 'desc',
-                        width:500
+                        dataIndex: 'desc'
                     },
                     {
                         title: '记录状态',
-                        dataIndex: 'status',
-                        width:100
+                        dataIndex: 'status'
                     },
                     {
                         title: '创建时间',
-                        dataIndex: 'create_time',
-                        width:170,
+                        dataIndex: 'create_time'
                     },
                     {
                         title: '更新时间',
-                        dataIndex: 'update_time',
-                         width:170,
+                        dataIndex: 'update_time'
                     },
                     {
                         title: '操作',
                         dataIndex: 'action',
                         scopedSlots: { customRender:'action'},
-                        align: 'center',
-                        key: 'operation',
-                        fixed: 'right',
-                        width: 100,
-                        scopedSlots: { customRender: 'action' },                   
-                    },
+                        align: 'center'
+                    }
     ];
 import ReportRecordsDetail from './ReportRecordsDetail.vue'
 import Aes from '../../utils/aes.js'
@@ -211,8 +197,6 @@ export default {
   }
 }
 </script>
-<style lang="scss">
-.notshow{
-    display: none;
-}
+<style scoped>
+
 </style>

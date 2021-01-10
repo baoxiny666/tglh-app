@@ -7,6 +7,7 @@ const store = new Vuex.Store({
   state: {
     //存储用户
     currentUser:'',
+    //存储charts图
     //存储token
     Authorization: localStorage.getItem('Authorization') ? localStorage.getItem('Authorization') : '',
     //全局路径

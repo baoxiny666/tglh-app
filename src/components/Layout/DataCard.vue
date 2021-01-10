@@ -5,7 +5,7 @@
         <a-row class="row">
       <a-col :span="15">
           <h3>全厂累计上报</h3>
-          <p>{{allnum}}项</p>
+          <p>{{total}}项</p>
       </a-col>
       <a-col :span="9">
         <a-icon type="bell" style="color:white;font-size:70px" />
@@ -18,7 +18,7 @@
         <a-row class="row">
       <a-col :span="15">
           <h3>全厂累计审核</h3>
-          <p>{{pass}}项</p>
+          <p>{{finish_pass}}项</p>
       </a-col>
       <a-col :span="9">
         <a-icon type="search" style="color:white;font-size:70px"/>
@@ -31,7 +31,7 @@
         <a-row class="row">
       <a-col :span="15">
           <h3>全厂累计处理</h3>
-          <p>{{finish}}项</p>
+          <p>{{finish_chuli}}项</p>
       </a-col>
       <a-col :span="9">
         <a-icon type="setting" style="color:white;font-size:70px"/>
@@ -44,7 +44,7 @@
         <a-row class="row">
       <a-col :span="15">
           <h3>全厂累计归档</h3>
-          <p>{{finish}}项</p>
+          <p>{{finish_guidang}}项</p>
       </a-col>
       <a-col :span="9">
         <a-icon type="schedule" style="color:white;font-size:70px" />
@@ -56,15 +56,33 @@
 
 </template>
 <script>
+import aes from '../../utils/aes.js'
+import Api from '@/api/datacard/datacard.js'
 export default {
   name:'DataCard',
   data(){
     return{
-      allnum:'11111',
-      pass:'111111',
-      finish:'444444',
+      total:'11111',
+      finish_pass:'111111',
+      finish_chuli:'11111',
+      finish_guidang:'444444',
+      fillin:[]
     }
   },
+  methods:{
+    async init_datacard(){
+      let response = await Api.selectDataCard()
+      let that = this
+      this.total= response.data.total
+      this.finish_pass= response.data.y_audit
+      this.finish_chuli= response.data.y_chuli
+      this.finish_guidang= response.data.y_guid
+     
+    }
+  },
+  mounted(){
+    this.init_datacard();
+  }
 }
 </script>
 <style lang="scss">

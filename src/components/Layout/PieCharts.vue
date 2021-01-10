@@ -13,28 +13,36 @@ const data = [
 ];
 export default {
     methods:{
-        charts(){
+        piecharts(){
+            let that = this
             const piePlot = new Pie('container1', {
-            appendPadding: 10,
-            data,
-            angleField: 'value',
-            colorField: 'type',
-            radius: 0.8,
-            label: {
-                type: 'spider',
-                content: '{name} {percentage}',
-            },
-            legend: {
-                layout: 'horizontal',
-                position: 'top'
-            },   
-            interactions: [{ type: 'pie-legend-active' }, { type: 'element-active' }],
+                appendPadding: 10,
+                data:that.pieChartsData,
+                angleField: 'value',
+                colorField: 'type',
+                radius: 0.8,
+                label: {
+                    type: 'spider',
+                    content: '{name} {percentage}',
+                },
+                legend: {
+                    layout: 'horizontal',
+                    position: 'top'
+                },   
+                interactions: [{ type: 'pie-legend-active' }, { type: 'element-active' }],
             });
             piePlot.render();
+            piePlot.changeData(that.pieChartsData);
         }
     },
+    watch: {
+        pieChartsData: function(newVal,oldVal){
+ 
+         }
+    },
+    props:["pieChartsData"],
     mounted:function(){
-        this.charts();
+        this.piecharts();
     }
 }
 </script>

@@ -5,26 +5,21 @@
         　　　　<input type="hidden" name="aesData" :value="excelParams">
             </form>
             <iframe id="iframe" name="iframe" style="display:none"></iframe>
-               <a-row>
-              <a-form layout="inline" class="layout-form" :form="reportRecordConditionForm" >
-            <a-col :span="7" style="width:270px">
+            <a-form layout="inline" class="layout-form" :form="reportRecordConditionForm" >
+                 <a-space :size="size">
                     <a-form-item label="关键字">
                         <a-input-search v-model="search"   @search="onSearchInput()" placeholder="请输入搜索内容" v-decorator="[
                                     'search'
-                                ]" class="input-serach">
+                                ]">
                             <a-icon type="filter" slot="prefix" />
                         </a-input-search>
                     </a-form-item>
-            </a-col>
-            <a-col :span="6" style="width:190px">
-                <a-form-item label="区域选择">
-                    <a-cascader v-decorator="[
-                        'depart_area_select'
-                    ]"  :options="departAreaOptions" placeholder="请选择" @change="departAreaChange" class="cascader"/>
+                    <a-form-item label="区域选择">
+                        <a-cascader v-decorator="[
+                                    'depart_area_select'
+                                ]"  :options="departAreaOptions" placeholder="请选择" @change="departAreaChange" />
                     </a-form-item>
-            </a-col>
-             <a-col :span="5" style="width:210px">
-                            <a-form-item label="状态选择">
+                    <a-form-item label="状态选择">
                             <a-select   style="width: 120px"
                                 v-decorator="[
                                     'status'
@@ -40,21 +35,17 @@
                                 
                             </a-select>
                         </a-form-item>
-            </a-col>
-            <a-col :span="6" style="width:350px">
                         <a-form-item label="时间选择">
-                            <a-config-provider>
-                                    <a-range-picker  class="timepicker" v-decorator="[
-                                    'time_select' 
+                            <a-config-provider >
+                                    <a-range-picker v-decorator="[
+                                    'time_select'
                                 ]"
                                         @change="onRepRecordsDateChange"
                                     >
                                     </a-range-picker>
                             </a-config-provider  >
                         </a-form-item>
-                 </a-col>
-                 <a-col :span="5"> 
-<a-form-item>
+                        <a-form-item>
                             <a-button type="primary" icon="search" @click="handleReportRecordsSubmit">
                                 搜索
                             </a-button>  
@@ -65,11 +56,8 @@
                                 导出数据
                             </a-button>
                         </a-form-item>
-                        
-                 </a-col>
-                   </a-form>   
-    </a-row>     
-                                              
+                     </a-space>
+            </a-form>
         </a-layout-header>
         <a-layout-content class="layout-ua-content">
             <report-records-list style="height:710px !important;overflow:auto" :message="reportRecordData"></report-records-list>
@@ -122,7 +110,6 @@
         methods: {
            
                 reportRecordListApi(params){
-             
                     let data;
                     if(params == undefined){
                         data = {
@@ -265,8 +252,6 @@
 <style> 
     .layout-form{
         margin-top: 0.2rem !important;
-        display: flex !important;;
-        flex-direction: row !important;
     }
     .layout-ua-header{
         width:100% !important;
@@ -283,14 +268,5 @@
     .layout-ua-footer{
         width:100% !important;
         height:2rem !important;
-    }
-    .input-serach{
-        width:190px!important
-    }
-    .cascader{
-        width: 100px!important;
-    }
-    .timepicker{
-        width: 260px;
     }
 </style>

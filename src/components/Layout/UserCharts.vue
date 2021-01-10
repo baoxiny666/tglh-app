@@ -9,11 +9,11 @@
           <div style="height:13px"></div>
       </a-col>
       <a-col :span="24" class="space3">
-        <div class="charts2"><data-charts style="width:90%"></data-charts></div>
-        <div class="charts1"><pie-charts></pie-charts></div>
+        <!-- <div class="charts2"><data-charts style="width:90%"></data-charts></div>
+        <div class="charts1"><pie-charts></pie-charts></div> -->
       </a-col>
        <a-col :span="24">
-       <div style="height:10px;background-color:white"></div>
+        <div style="height:10px;background-color:white"></div>
        </a-col>
     </a-row>
 </template>
