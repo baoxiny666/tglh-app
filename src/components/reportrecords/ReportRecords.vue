@@ -47,6 +47,7 @@
                                     <a-range-picker  class="timepicker" v-decorator="[
                                     'time_select' 
                                 ]"
+                                     :ranges="{ 今日: [moment(), moment()] }"
                                         @change="onRepRecordsDateChange"
                                     >
                                     </a-range-picker>
@@ -54,7 +55,7 @@
                         </a-form-item>
                  </a-col>
                  <a-col :span="5"> 
-<a-form-item>
+                        <a-form-item>
                             <a-button type="primary" icon="search" @click="handleReportRecordsSubmit">
                                 搜索
                             </a-button>  
@@ -72,7 +73,7 @@
                                               
         </a-layout-header>
         <a-layout-content class="layout-ua-content">
-            <report-records-list style="height:710px !important;overflow:auto" :message="reportRecordData"></report-records-list>
+            <report-records-list style="height:710px !important;overflow:auto" v-on:receivePageHelper="receivePageHelper" :message="reportRecordData"></report-records-list>
         </a-layout-content>
         <a-layout-footer class="layout-ua-footer">
         </a-layout-footer>
@@ -81,18 +82,23 @@
 </template>
 
 <script> 
+    import moment from 'moment';
+    import locale from 'ant-design-vue/es/locale/zh_CN'
+    import "moment/locale/zh-cn"
     import Aes from '../../utils/aes.js'
     import ReportRecordsList from './ReportRecordsList'
-    import zhCn from 'ant-design-vue/es/date-picker/locale/zh_CN';
     import Api from '@/api/reportrecords/reportrecords.js'
     export default {
         components: {
+           
             ReportRecordsList
         },
         data() {
             return {
                 statusDefault:-1,
                 departAreaDefault:-1,
+                defaultCurrent:'',
+                defaultPageSize:'',
                 size:'middle',
                 visible: false,
                 dateFormat: 'YYYY/MM/DD',
@@ -106,7 +112,7 @@
                 area_no:'',
                 search:'',
                 status:'',
-                locale:zhCn,
+                locale:locale,
                 reportRecordConditionForm: this.$form.createForm(this, { name: 'coordinated' }),
                 reportRecordData:[],
                 excelParams:{},
@@ -120,7 +126,11 @@
                 }
         },
         methods: {
-           
+                moment,
+                //接收 分页条件
+                receivePageHelper:function(params){
+                    console.log(params)
+                },
                 reportRecordListApi(params){
              
                     let data;

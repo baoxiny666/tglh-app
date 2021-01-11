@@ -3,15 +3,16 @@
       <a-col :span="11" style="text-align:right">
         <a>请选择想要查看的数据：</a>
         <a-select default-value="各分厂上报数" style="width: 140px">
-          <a-select-option :value="sbs"  @click="select1()">
-          各分厂上报数
-          </a-select-option>
-        <a-select-option :value="cls" @click="select2()">
-          各分厂处理数
-          </a-select-option>
-        <a-select-option :value="wcl" @click="select3()">
+            <a-select-option :value="sbs"  @click="select1()">
+              各分厂上报数
+            </a-select-option>
+            <a-select-option :value="cls" @click="select2()">
+              各分厂处理数
+            </a-select-option>
+            <a-select-option :value="wcl" @click="select3()">
               各分厂未处理数
-        </a-select-option>
+            </a-select-option>
+
         </a-select>
       </a-col>
       <a-col :span="1">
@@ -24,10 +25,10 @@
           />
       </a-col>
       <a-col :span="24" style="height:40px"></a-col>
-      <a-rows>
+      <a-row>
 
         <a-col :span="12">
-            <div id="colContainer"></div>
+          <div id="colContainer"></div>
             <!-- <data-charts :colChartsData="chartsData"></data-charts> -->
         </a-col>
 
@@ -36,7 +37,7 @@
           <!-- :pieChartsData="chartsData" -->
             <!-- <pie-charts :pieChartsData="chartsData"></pie-charts> -->
         </a-col>
-      </a-rows>
+      </a-row>
   </a-row>
   
 </template>
@@ -74,7 +75,6 @@ export default {
   },
   methods: {
     moment,
-    
     onChange(dates, dateStrings) {
       this.start_time = dateStrings[0]
       this.end_time = dateStrings[1]
@@ -153,7 +153,7 @@ export default {
                 opacity: 100,
               },
               formatter(value){
-                debugger
+       
                 if(value.number == '0'){
                   value = 20
                   return "0项"

@@ -38,7 +38,7 @@
               </a-input>
             </a-form-item>
             <a-form-item>
-              <a-checkbox
+              <!-- <a-checkbox
                 v-decorator="[
                   'remember',
                   {
@@ -51,13 +51,13 @@
               </a-checkbox>
               <a class="login-form-forgot" href="">
                 忘记密码
-              </a>
+              </a> -->
               <a-button type="primary" html-type="submit" class="login-form-button">
                 登录
               </a-button>            
-              <a @click="Regist()">
+              <!-- <a @click="Regist()">
                 立即注册
-              </a>
+              </a> -->
             </a-form-item>
           </a-form>
         </div>

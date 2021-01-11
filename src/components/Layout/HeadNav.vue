@@ -1,29 +1,29 @@
 <template>
-<a-row>
-      <a-col :span="23">
-        <div class="layout_shrink">
-             <bread-crumb></bread-crumb>
-        </div>
-      </a-col>
-      <a-col :span="1">
-        <div class="menu">
-            <a-dropdown>
-              <a style="width:7rem !important" @click="e => e.preventDefault()">
-                <a-icon type="user" style="color: rgba(24,144,120,.95)"/>&nbsp;炼铁厂-数字信息化部-张莫某<a-icon type="down" />
-              </a>
-              <a-menu slot="overlay">
-                <a-menu-item>
-                  <a href="javascript:;">个人中心</a>
-                </a-menu-item>
-                <a-menu-item>
-                  <a href="javascript:;">退出登录</a>
-                </a-menu-item>
-              </a-menu>
-            </a-dropdown>
-        </div> 
-      </a-col>
-    </a-row>
+  <a-row>
+        <a-col type="flex" :span="12">
+          <!-- class="layout_shrink" -->
+          <div>
+              <bread-crumb></bread-crumb>
+          </div>
+        </a-col>
+        <a-col :span="8">
 
+        </a-col>
+        <a-col :span="4">
+          <div class="menu">
+              <a-dropdown>
+                <a style="width:7rem !important" @click="e => e.preventDefault()">
+                  <a-icon type="user" style="color: rgba(24,144,120,.95)"/>&nbsp;用户<a-icon type="down" />
+                </a>
+                <a-menu slot="overlay">
+                  <a-menu-item>
+                    <a href="javascript:;" @click="loginOut">退出登录</a>
+                  </a-menu-item>
+                </a-menu>
+              </a-dropdown>
+          </div> 
+        </a-col>
+  </a-row>
 </template>
 <script>
 import BreadCrumb from './BreadCrumb.vue'
@@ -36,9 +36,15 @@ export default {
       return {       
       }
     },
+    methods:{
+      loginOut(){
+        localStorage.removeItem('Authorization')
+         window.location.href = "/"
+      }
+    }
 }
 </script>
-<style lang="scss">
+<style>
 .layout_shrink{
     display:flex;
     width:100%;
@@ -48,7 +54,7 @@ export default {
     flex-direction: row;
   }
 .menu{
-    width:18rem;
+    width:5rem;
     height:3rem;
     margin-left: 13rem;
     text-align:right;

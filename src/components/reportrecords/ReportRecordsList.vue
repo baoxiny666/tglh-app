@@ -14,7 +14,7 @@
         :pagination="pagination"
         :scroll="{ x: 2000}"
         >
-        <a slot="action" slot-scope="text" href="javascript:;">action</a>
+        <a slot="action" slot-scope="text" href="javascript:void();">action</a>
             <span slot="action" slot-scope="record,index">
                 <a @click="viewDetail(index)">详情</a>
                 <!-- <a-divider type="vertical" />
@@ -35,7 +35,7 @@
                     {
                       title:'ID',
                       dataIndex:'id',
-                      hidden:false,
+                      hidden:true,
                       width:70
                     },
                      {
@@ -119,9 +119,20 @@ export default {
                 showTotal: (total, range) => {
                   return range[0] + '-' + range[1] + ' 共' + total + '条'
                 },
-                onShowSizeChange:(current, pageSize)=>this.pageSize = pageSize,
+                // onShowSizeChange:(current, pageSize)=>this.pageSize = pageSize,
                 hideOnSinglePage:true,
-                showQuickJumper:true
+                showQuickJumper:true,
+                onShowSizeChange: (current, pageSize) => {
+                  this.pagination.defaultCurrent = 1;
+                  this.pagination.defaultPageSize = pageSize;
+                  this.$emit('receivePageHelper',this.pagination);//显示列表的接口名称
+                },
+                // 改变每页数量时更新显示
+                onChange: (current, size) => {
+                  this.pagination.defaultCurrent = current;
+                  this.pagination.defaultPageSize = size;
+                  this.$emit('receivePageHelper',this.pagination);
+                },
         }
     }
   },
@@ -207,7 +218,7 @@ export default {
     }
   },
   mounted(){
-    
+    this.$emit('receivePageHelper',this.pagination);
   }
 }
 </script>

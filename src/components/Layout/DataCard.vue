@@ -1,6 +1,7 @@
 <template>
    <a-row style="background:white;height:150px;border-radius:7px">
-    <a-col :span="6">
+    
+    <a-col :span="4" class="cardWidth">
       <a-card class="card1">
         <a-row class="row">
       <a-col :span="15">
@@ -13,7 +14,8 @@
     </a-row>    
       </a-card>
     </a-col>
-    <a-col :span="6">
+   
+    <a-col :span="4"  class="cardWidth">
      <a-card class="card2">
         <a-row class="row">
       <a-col :span="15">
@@ -26,7 +28,8 @@
     </a-row>    
       </a-card>
     </a-col>
-    <a-col :span="6" >
+    
+    <a-col :span="4"  class="cardWidth">
        <a-card class="card3">
         <a-row class="row">
       <a-col :span="15">
@@ -39,8 +42,23 @@
     </a-row>    
       </a-card>
     </a-col>
-     <a-col :span="6" >
+   
+      <a-col :span="4"  class="cardWidth">
        <a-card class="card4">
+        <a-row class="row">
+      <a-col :span="15">
+          <h3>全厂累计未处理</h3>
+          <p>{{finish_weichuli}}项</p>
+      </a-col>
+      <a-col :span="9">
+        <a-icon type="heat-map" style="color:white;font-size:70px" />
+      </a-col>
+    </a-row>    
+      </a-card>
+    </a-col>
+   
+     <a-col :span="4"  class="cardWidth">
+       <a-card class="card5">
         <a-row class="row">
       <a-col :span="15">
           <h3>全厂累计归档</h3>
@@ -66,6 +84,7 @@ export default {
       finish_pass:'111111',
       finish_chuli:'11111',
       finish_guidang:'444444',
+      finish_weichuli:'22222',
       fillin:[]
     }
   },
@@ -77,7 +96,7 @@ export default {
       this.finish_pass= response.data.y_audit
       this.finish_chuli= response.data.y_chuli
       this.finish_guidang= response.data.y_guid
-     
+      this.finish_weichuli = response.data.y_add
     }
   },
   mounted(){
@@ -122,6 +141,16 @@ export default {
     margin: 0 auto !important;
     margin-top: 10px !important;
   }
+
+  .card5{
+    text-align: center;
+    width: 90%;
+    height: 130px;
+    background-color:	#7B68EE !important;
+    border-radius: 11px !important;
+    margin: 0 auto !important;
+    margin-top: 10px !important;
+  }
   h3{
     color: white!important;
     font-family: "Microsoft Yahei", sans-serif;
@@ -131,5 +160,8 @@ export default {
      color: white!important;
      font-size: 28px;
      font-weight:600 !important;
+  }
+  .cardWidth{
+    width:330px !important
   }
 </style>

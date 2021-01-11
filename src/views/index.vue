@@ -10,6 +10,7 @@
       </a-layout-header>
       <a-layout-content style="margin: 20px 16px" class="layout-content">
            <router-view></router-view>
+          
       </a-layout-content>
       <a-layout-footer style="text-align: center">
         Ant Design ©2018 Created by Ant UED
@@ -24,7 +25,8 @@ import UserCharts from '../components/Layout/UserCharts.vue';
 export default {
   data() {
     return {
-      collapsed: false,
+      collapsed: false
+     
     };
   },
   components:{
@@ -33,6 +35,7 @@ export default {
       UserCharts
   },
   methods:{
+  
   }
 }
 </script>
@@ -42,8 +45,8 @@ export default {
     margin: 16px;
   }
   .layout-header{
-    display: flex;
-    flex-direction: row;
+    /* display: flex;
+    flex-direction: row; */
     height: 50px !important;
   }
   .logo{
