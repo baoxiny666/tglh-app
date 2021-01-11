@@ -4,17 +4,18 @@
         <a>请选择想要查看的数据：</a>
         <a-select default-value="各分厂上报数" style="width: 140px">
           <a-select-option :value="sbs"  @click="select1()">
-          各分厂上报数
+            各分厂上报数
           </a-select-option>
-        <a-select-option :value="cls" @click="select2()">
-          各分厂处理数
+          <a-select-option :value="cls" @click="select2()">
+            各分厂处理数
           </a-select-option>
-        <a-select-option :value="wcl" @click="select3()">
-              各分厂未处理数
-        </a-select-option>
+          <a-select-option :value="wcl" @click="select3()">
+            各分厂未处理数
+          </a-select-option>
         </a-select>
       </a-col>
       <a-col :span="1">
+
       </a-col>
       <a-col :span="12">
           <a>请选择时间范围：</a>
@@ -23,9 +24,10 @@
             @change="onChange"
           />
       </a-col>
+    
       <a-col :span="24" style="height:40px"></a-col>
-      <a-rows>
 
+      <a-rows>
         <a-col :span="12">
             <div id="colContainer"></div>
             <!-- <data-charts :colChartsData="chartsData"></data-charts> -->

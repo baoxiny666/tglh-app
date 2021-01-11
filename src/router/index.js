@@ -21,6 +21,7 @@ const routes = [
     path:'/index',
     name:'首页',
     component:Index,
+    redirect:'/UserCharts',
     meta:{title:'首页'},
     children:[
       {

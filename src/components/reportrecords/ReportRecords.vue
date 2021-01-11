@@ -69,7 +69,7 @@
                         
                  </a-col>
                    </a-form>   
-    </a-row>     
+            </a-row>     
                                               
         </a-layout-header>
         <a-layout-content class="layout-ua-content">
