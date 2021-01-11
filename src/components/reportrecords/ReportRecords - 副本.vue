@@ -8,7 +8,8 @@
             <a-form layout="inline" class="layout-form" :form="reportRecordConditionForm" >
                  <a-space :size="size">
                     <a-form-item label="关键字">
-                        <a-input-search v-model="search"   @search="onSearchInput()" placeholder="请输入搜索内容" v-decorator="[
+                        
+                        <a-input-search  v-model="search"   @search="onSearchInput()" placeholder="请输入搜索内容" v-decorator="[
                                     'search'
                                 ]">
                             <a-icon type="filter" slot="prefix" />

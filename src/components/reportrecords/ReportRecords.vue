@@ -73,7 +73,7 @@
                                               
         </a-layout-header>
         <a-layout-content class="layout-ua-content">
-            <report-records-list style="height:710px !important;overflow:auto" v-on:receivePageHelper="receivePageHelper" :message="reportRecordData"></report-records-list>
+            <report-records-list style="height:710px !important;overflow:auto" v-on:receivePageHelper="receivePageHelper"  :message="reportRecordData" :zongji="zongji"></report-records-list>
         </a-layout-content>
         <a-layout-footer class="layout-ua-footer">
         </a-layout-footer>
@@ -95,6 +95,7 @@
         },
         data() {
             return {
+                zongji:'',
                 statusDefault:-1,
                 departAreaDefault:-1,
                 defaultCurrent:'',
@@ -120,20 +121,18 @@
                 
             }
         },
-        watch: {
-                search(newValue, oldValue) {
-                    console.log(newValue)
-                }
-        },
         methods: {
                 moment,
                 //接收 分页条件
                 receivePageHelper:function(params){
-                    console.log(params)
+                    this.defaultCurrent = params.defaultCurrent
+                    this.defaultPageSize = params.defaultPageSize
+                    this.reportRecordListApi();
                 },
                 reportRecordListApi(params){
-             
+                    debugger
                     let data;
+                    let that = this
                     if(params == undefined){
                         data = {
                             start_time:this.start_time,
@@ -141,7 +140,9 @@
                             area_no:this.area_no,
                             depart_id:this.depart_id,
                             search:this.search,
-                            status:this.status
+                            status:this.status,
+                            currentPage:this.defaultCurrent,
+                            pageSize:this.defaultPageSize
                         } 
                     }else{
                         data = params;
@@ -161,7 +162,9 @@
                         url: 'apis/report/select',
                         data:transfer
                     }).then((response)=> {
-                       this.reportRecordData = response.data.data
+                        debugger
+                        that.reportRecordData = response.data.data.content
+                        that.zongji = response.data.data.totalSize
                     }).catch(function (error) {
                         console.log(error);
                     })
@@ -195,7 +198,8 @@
                             that.transferParams["start_time"] = that.start_time
                             that.transferParams["end_time"] =  that.end_time
                             that.transferParams["status"] = that.status
-
+                            that.transferParams["currentPage"] = that.defaultCurrent
+                            that.transferParams["pageSize"] = that.defaultPageSize
                             that.reportRecordListApi(that.transferParams);
          
                         }
@@ -267,7 +271,7 @@
             mounted(){
                 this.initDepartFactory();
                 this.initReportStatus();
-                this.reportRecordListApi()
+                // this.reportRecordListApi()
             }
     }
 </script>

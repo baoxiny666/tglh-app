@@ -132,11 +132,11 @@ export default {
                   this.pagination.defaultCurrent = current;
                   this.pagination.defaultPageSize = size;
                   this.$emit('receivePageHelper',this.pagination);
-                },
+                }
         }
     }
   },
-  props:["message"],
+  props:["message","zongji"],
   methods:{
       handleUserEdit(params){
         console.log(params)
@@ -201,6 +201,11 @@ export default {
       }
 
 
+  },
+  watch:{
+    zongji(value){
+      this.pagination.total = value
+    }
   },
   computed: {
     rowSelection() {

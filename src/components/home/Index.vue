@@ -1,6 +1,7 @@
 <template>
   <a-layout id="components-layout-demo-custom-trigger">
-    <a-layout-sider class="layoutLeft" v-model="collapsed" :trigger="null" collapsible>
+    <!-- v-model="collapsed" -->
+    <a-layout-sider class="layoutLeft"  :trigger="null" collapsible>
       <div class="logo" :style="getStyle()">
         <div class="login_title" v-if="logintitle">
           联合特钢
