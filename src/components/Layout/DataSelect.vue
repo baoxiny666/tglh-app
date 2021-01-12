@@ -46,8 +46,7 @@
 import { Column } from '@antv/g2plot';
 
 import { Pie } from '@antv/g2plot';
-
-
+import store from '../../store/index.js'
 import Aes from '../../utils/aes.js'
 import moment from 'moment';
 import locale from 'ant-design-vue/es/locale/zh_CN'
@@ -115,10 +114,12 @@ export default {
       }
       let enc_after  = Aes.encrypt(data);     
       let transfer = new URLSearchParams();
+      let path =this.$store.state.config.globalPath
+      alert(path)
       transfer.append('aesData', enc_after); 
       this.$axios({
           method: 'post',
-          url: 'apis/statistic/selectDataCharts',
+          url: path+'/statistic/selectDataCharts',
           data:transfer
       }).then((response)=> {
           that.pieChartsData = response.data.data.pieCharts;

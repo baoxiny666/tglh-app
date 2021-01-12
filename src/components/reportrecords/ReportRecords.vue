@@ -86,7 +86,7 @@
     import moment from 'moment';
     import 'moment/locale/zh-cn';
     moment.locale('zh-cn')
-  
+    import store from '../../store/index.js'
     import locale from 'antd/lib/date-picker/locale/zh_CN';
     import "moment/locale/zh-cn"
     import Aes from '../../utils/aes.js'
@@ -153,7 +153,7 @@
 
                     
                     let enc_after  = Aes.encrypt(data);
-                   
+                    let path =this.$store.state.config.globalPath
                     let transfer = new URLSearchParams();
                     transfer.append('aesData', enc_after); 
                     this.excelParams = enc_after;
@@ -162,7 +162,7 @@
 
                     this.$axios({
                         method: 'post',
-                        url: 'apis/report/select',
+                        url: path+'/report/select',
                         data:transfer
                     }).then((response)=> {
                         that.reportRecordData = response.data.data.content

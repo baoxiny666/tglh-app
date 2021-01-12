@@ -1,7 +1,9 @@
 
 import axios from '../../interceptor/interceptor.js'
+import store from '../../store/index.js'
+let path = store.state.config.globalPath
 export const getDepartArea = () => {
-	return axios.post('apis/report/departarea', {
+	return axios.post(path+'/report/departarea', {
 		
 	}).then(res => {
 		return res.data
@@ -12,7 +14,7 @@ export const getDepartArea = () => {
 
 
 export const getReportStatus = () => {
-	return axios.post('apis/report/status', {
+	return axios.post(path+'/report/status', {
 		
 	}).then(res => {
 		return res.data
@@ -23,7 +25,7 @@ export const getReportStatus = () => {
 
 
 export const reportRecordListApi = (data) => {
-    return axios.post('apis/report/select', {
+    return axios.post(path+'/report/select', {
 		data
 	}).then(res => {
 		return res.data
