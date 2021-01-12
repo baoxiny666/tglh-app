@@ -156,7 +156,7 @@
                     let path =this.$store.state.config.globalPath
                     let transfer = new URLSearchParams();
                     transfer.append('aesData', enc_after); 
-                    this.excelParams = enc_after;
+                    this.excelParams = transfer;
                     //let reportRecordList = await Api.reportRecordListApi(total);
                    
 
@@ -207,9 +207,36 @@
                     });
                 },
                 exportExcel(){
-                    let exportForm = document.getElementById("myform");
-                    exportForm.submit();
+                    // let exportForm = document.getElementById("myform");
+                    // exportForm.submit();
+                    let path =this.$store.state.config.globalPath
+                    this.$axios({
+                        method: 'post',
+                        url: path+'/report/export',
+                        data:this.excelParams,
+                        responseType: 'blob'
+                    }).then((response)=> {
+                        this.download(response)
+                    }).catch(function (error) {
+                        console.log(error);
+                    })
                    
+                },
+                download(data){
+                    if (!data) {
+                        return
+                    }
+                    // new Blob([data])用来创建URL的file对象或者blob对象
+                    let url = window.URL.createObjectURL(new Blob([data])); 
+                    // 生成一个a标签
+                    let link = document.createElement("a");
+                    link.style.display = "none";
+                    link.href = url;
+                    // 生成时间戳
+                    let timestamp="隐患上报记录"+new Date().getTime();   
+                    link.download = timestamp + ".csv";   
+                    document.body.appendChild(link);
+                    link.click();
                 },
                 onRepRecordsDateChange(dates, dateStrings) {
                     this.start_time =  dateStrings[0];

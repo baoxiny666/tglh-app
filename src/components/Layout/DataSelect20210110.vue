@@ -81,7 +81,7 @@ export default {
       this.dataChartsApi("date")
     },
     handleChange(value) {
-      alert(value)
+      
     },
     select1(){
       this.status =  ""

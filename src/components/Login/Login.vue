@@ -77,6 +77,7 @@
 </template>
 
 <script>
+import store from '../../store/index.js'
 import Aes from '../../utils/aes.js'
 import Api from '@/api/login/login.js'
 export default {
@@ -106,7 +107,7 @@ export default {
                        userName: values.userName,
                        passWord: values.passWord
           }
-
+          let path =this.$store.state.config.globalPath
           let enc_after = Aes.encrypt(data);
           let globalstate = that.$store.state;
           let globalPath = that.$store.state.config.globalPath;
@@ -116,7 +117,7 @@ export default {
       
           this.$axios({
             method: 'post',
-            url: 'apis/jwt/login',
+            url:  path+'/jwt/login',
             data:params
           }).then(function (response) {
             console.log(response);

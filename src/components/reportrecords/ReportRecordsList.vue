@@ -97,6 +97,7 @@
                     },
     ];
 import ReportRecordsDetail from './ReportRecordsDetail.vue'
+import store from '../../store/index.js'
 import Aes from '../../utils/aes.js'
 export default {
    components:{
@@ -160,6 +161,7 @@ export default {
       },
       viewDetail(index){
         let that = this
+        let path =this.$store.state.config.globalPath
         this.recordId = index.id
         this.rrdDetailVisible = true
         let recordIdObj = {"id":this.recordId};
@@ -168,7 +170,7 @@ export default {
         transfer.append('aesData', enc_after); 
         this.$axios({
             method: 'post',
-            url: 'apis/report/selectDetail',
+            url: path+'/report/selectDetail',
             data:transfer
         }).then((response)=> {
             this.reportRDetail = response.data.data[0]

@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.33548cc21a4aac5d37e44195bcd83d45.js"
+  "/precache-manifest.6c3b0cfc1edab2449205bed9757a51c8.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "tglh-app"});

@@ -82,7 +82,7 @@ export default {
       this.dataChartsApi("date")
     },
     handleChange(value) {
-      alert(value)
+     
     },
     select1(){
       this.status =  ""
@@ -115,7 +115,7 @@ export default {
       let enc_after  = Aes.encrypt(data);     
       let transfer = new URLSearchParams();
       let path =this.$store.state.config.globalPath
-      alert(path)
+    
       transfer.append('aesData', enc_after); 
       this.$axios({
           method: 'post',
