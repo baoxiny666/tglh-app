@@ -35,18 +35,19 @@
                     {
                       title:'ID',
                       dataIndex:'id',
-                      hidden:true,
-                      width:70
+                      hidden:false,
+                      className:"notshow",                
+                      width:100
                     },
                      {
                         title: '部门名称',
                         dataIndex: 'depart_name',
-                        width:100
+                        width:180
                     },
                      {
                         title: '区域名称',
                         dataIndex: 'area_name',
-                        width:180
+                        width:110
                     },
                    
                     {
@@ -57,22 +58,22 @@
                     {
                         title: '负责人姓名',
                         dataIndex: 'manage_user_name',
-                        width:110
+                        width:120
                     },
                     {
                         title: '负责人手机号',
                         dataIndex: 'manage_phone',
-                         width:120
+                         width:500
                     },
                     {
                         title: '隐患描述',
                         dataIndex: 'desc',
-                        width:500
+                        width:100
                     },
                     {
                         title: '记录状态',
                         dataIndex: 'status',
-                        width:100
+                        width:170
                     },
                     {
                         title: '创建时间',
@@ -82,7 +83,7 @@
                     {
                         title: '更新时间',
                         dataIndex: 'update_time',
-                         width:170,
+                         width:100,
                     },
                     {
                         title: '操作',

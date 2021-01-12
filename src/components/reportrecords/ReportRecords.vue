@@ -44,7 +44,7 @@
             <a-col :span="6" style="width:350px">
                         <a-form-item label="时间选择">
                             <a-config-provider>
-                                    <a-range-picker  class="timepicker" v-decorator="[
+                                    <a-range-picker   class="timepicker" v-decorator="[
                                     'time_select' 
                                 ]"
                                      :ranges="{ 今日: [moment(), moment()] }"
@@ -82,8 +82,12 @@
 </template>
 
 <script> 
+    
     import moment from 'moment';
-    import locale from 'ant-design-vue/es/locale/zh_CN'
+    import 'moment/locale/zh-cn';
+    moment.locale('zh-cn')
+  
+    import locale from 'antd/lib/date-picker/locale/zh_CN';
     import "moment/locale/zh-cn"
     import Aes from '../../utils/aes.js'
     import ReportRecordsList from './ReportRecordsList'
@@ -130,7 +134,6 @@
                     this.reportRecordListApi();
                 },
                 reportRecordListApi(params){
-                    debugger
                     let data;
                     let that = this
                     if(params == undefined){
@@ -162,7 +165,6 @@
                         url: 'apis/report/select',
                         data:transfer
                     }).then((response)=> {
-                        debugger
                         that.reportRecordData = response.data.data.content
                         that.zongji = response.data.data.totalSize
                     }).catch(function (error) {
@@ -187,7 +189,6 @@
                             console.log('Received values of form: ', values);   
                             that.transferParams = values;
                             console.log("回到"+that.transferParams.depart_area_select)
-                            debugger;
                             that.status = that.transferParams.status == "-1"?"":that.transferParams.status
                             that.depart_id =  that.transferParams.depart_area_select == undefined || that.transferParams.depart_area_select[0] == "-1"?
                                                  "": that.transferParams.depart_area_select[0]

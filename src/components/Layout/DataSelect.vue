@@ -155,7 +155,6 @@ export default {
                 opacity: 100,
               },
               formatter(value){
-                debugger
                 if(value.number == '0'){
                   value = 20
                   return "0项"

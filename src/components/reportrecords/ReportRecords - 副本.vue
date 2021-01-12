@@ -162,7 +162,6 @@
                             console.log('Received values of form: ', values);   
                             that.transferParams = values;
                             console.log("回到"+that.transferParams.depart_area_select)
-                            debugger;
                             that.status = that.transferParams.status == "-1"?"":that.transferParams.status
                             that.depart_id =  that.transferParams.depart_area_select == undefined || that.transferParams.depart_area_select[0] == "-1"?
                                                  "": that.transferParams.depart_area_select[0]

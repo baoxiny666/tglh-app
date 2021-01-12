@@ -45,7 +45,7 @@ export default {
 }
 </script>
 <style>
-.layout_shrink{
+  .layout_shrink{
     display:flex;
     width:100%;
     height:3rem;
@@ -53,13 +53,13 @@ export default {
     align-items: center;
     flex-direction: row;
   }
-.menu{
-    width:5rem;
-    height:3rem;
-    margin-left: 13rem;
-    text-align:right;
-    line-height:3rem;
-}
+  .menu{
+      width:5rem;
+      height:3rem;
+      margin-left: 11rem;
+      text-align:right;
+      line-height:3rem;
+  }
  .trigger {
     font-size: 1rem;
     line-height: 3.5rem;
