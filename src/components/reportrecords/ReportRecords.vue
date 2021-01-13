@@ -214,9 +214,10 @@
                         method: 'post',
                         url: path+'/report/export',
                         data:this.excelParams,
-                        responseType: 'blob'
+                        responseType: 'blob',
+                        responseEncoding:'utf8'
                     }).then((response)=> {
-                        this.download(response)
+                        this.download(response.data)
                     }).catch(function (error) {
                         console.log(error);
                     })
@@ -226,8 +227,10 @@
                     if (!data) {
                         return
                     }
-                    // new Blob([data])用来创建URL的file对象或者blob对象
-                    let url = window.URL.createObjectURL(new Blob([data])); 
+                    const blobType = 'application/force-download';
+                    const blobo = new Blob([data],{type:blobType})
+                 
+                    let url = window.URL.createObjectURL(blobo); 
                     // 生成一个a标签
                     let link = document.createElement("a");
                     link.style.display = "none";

@@ -13,7 +13,7 @@ const store = new Vuex.Store({
     //全局路径
     config:{
 
-      globalPath:'http://10.34.3.12:8000/api/',
+      globalPath:'http://10.1.0.226:8000/api/',
       globalUploadPics: 'http://10.1.0.213:8191/upload/',
       encryptIv :'fe8a5d47f0bdf4f0',
       encryptKey :'87a1ec63db4c1d34',

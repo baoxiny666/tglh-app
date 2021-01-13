@@ -9,6 +9,7 @@ import devServer from '../vue.config.js'
 import CryptoJS from 'crypto-js'
 import Viewer from 'v-viewer'
 import 'viewerjs/dist/viewer.css'
+import './css/input-disabled.css'
 Vue.use(Viewer)
 Viewer.setDefaults({
   Options: {
